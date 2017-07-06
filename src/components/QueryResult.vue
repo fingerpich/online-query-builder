@@ -1,57 +1,53 @@
 <template>
   <div class="hello">
-    <el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-      <el-menu-item index="1">Solr Query builder</el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">Queries</template>
-        <el-menu-item index="2-1">item one</el-menu-item>
-        <el-menu-item index="2-2">item two</el-menu-item>
-        <el-menu-item index="2-3">item three</el-menu-item>
-      </el-submenu>
-      <el-menu-item index="3">
-        <a href="#/new">New+</a>
-      </el-menu-item>
-    </el-menu>
+    <head-menu></head-menu>
     <div class="queryText">
-      select filan bahman masalan
+      <a :href="'#/edit/'+$route.params.id">edit query</a>
     </div>
     <div>
       <el-table
-        :data="tableData3"
+        :data="list"
         border
         style="width: 100%"
         height="250">
         <el-table-column
-          fixed
-          prop="date"
-          label="Date"
-          width="150">
+          prop="title"
+          label="title"
+          >
         </el-table-column>
         <el-table-column
-          prop="name"
-          label="Name"
-          width="120">
+          prop="content"
+          label="content"
+          >
         </el-table-column>
         <el-table-column
-          prop="state"
-          label="State"
-          width="120">
+          prop="published_date"
+          label="published_date"
+          >
         </el-table-column>
         <el-table-column
-          prop="city"
-          label="City"
-          width="120">
+          prop="tag"
+          label="tag"
+          >
         </el-table-column>
         <el-table-column
-          prop="address"
-          label="Address"
-          width="300">
+          prop="keyword"
+          label="keyword"
+          >
         </el-table-column>
         <el-table-column
-          prop="zip"
-          label="Zip"
-          width="120">
+          prop="alexa_score"
+          label="alexa score"
+          >
         </el-table-column>
+        <el-table-column
+          prop="google_score"
+          label="google score"
+        ></el-table-column>
+        <el-table-column
+          prop="category"
+          label="category"
+        ></el-table-column>
       </el-table>
     </div>
   </div>
@@ -59,63 +55,21 @@
 
 <script>
   import QueryBuilder from './queryBuilder/queryBuilder.vue'
+  import services from '../services/service'
+  import headMenu from './HeadMenu.vue'
   export default {
     components: {
-      QueryBuilder
+      QueryBuilder, headMenu
     },
     name: 'queryEditor',
+    created () {
+      services.getResult(this.$route.params.id).then(function (results) {
+        this.list = results
+      }.bind(this))
+    },
     data () {
       return {
-        tableData3: [{
-          date: '2016-05-03',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-02',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-04',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-01',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-08',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-06',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-07',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }]
+        list: []
       }
     }
   }

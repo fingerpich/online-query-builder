@@ -22,9 +22,15 @@
 </template>
 
 <script>
+  import services from '../../../../../services/service'
   export default {
     name: 'fieldQuery',
     props: ['query'],
+    created () {
+      services.getFields().then(function (fields) {
+        this.fields = fields
+      }.bind(this))
+    },
     data () {
       return {
         matchInput: '',
@@ -43,19 +49,9 @@
     },
     methods: {
       onChange: function (e) {
-        this.query.q = this.query.field + this.query.operator + this.query.input
+        this.query.q = this.query.field + ' ' + this.query.operator + ' ' + this.query.input
         this.$emit('change')
       }
-//      getFieldQuery: function () {
-//        return this.selectedField + this.matchInput + this.selectedOperator
-//      }.bind(this),
-//      getFieldJsonQuery: function () {
-//        return {
-//          field: this.selectedField,
-//          input: this.matchInput,
-//          operator: this.selectedOperator
-//        }
-//      }.bind(this)
     },
     events: {
 

@@ -18,7 +18,12 @@ export default new Router({
       component: QueryEditor
     },
     {
-      path: '/result',
+      path: '/edit/:id',
+      name: 'QueryEditor',
+      component: QueryEditor
+    },
+    {
+      path: '/load/:id',
       name: 'QueryResult',
       component: QueryResult
     }
