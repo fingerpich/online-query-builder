@@ -24,7 +24,7 @@
     components: {
       QueryBuilder
     },
-    name: 'hello',
+    name: 'queryEditor',
     data () {
       return {
       }
