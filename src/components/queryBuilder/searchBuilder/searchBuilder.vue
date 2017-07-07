@@ -13,7 +13,7 @@
   import operatorBuilder from './operatorBuilder/operatorBuilder'
   function generateQuery (jsonData) {
     if (jsonData.subQueries) {
-      return jsonData.subQueries.map((subQuery) => { return generateQuery(subQuery) }).join(' ' + jsonData.operator + ' ')
+      return ' ( ' + jsonData.subQueries.map((subQuery) => { return generateQuery(subQuery) }).join(' ' + jsonData.operator + ' ') + ' ) '
     } else {
       return jsonData.operator + jsonData.query.q
     }
@@ -54,50 +54,67 @@
   .operator{
     display: flex;
     flex-direction: row;
+    $borderColor:#ddd;
     .operatorScope{
+      position: relative;
+      &::before{
+        content:' ';
+        position:absolute;
+        width:100%;
+        height:1px;
+        background: $borderColor;
+        top:50%;
+        margin:-1px 0;
+      }
+      &.has-sub-query::after{
+        content:' ';
+        position:absolute;
+        width:1px;
+        height:80%;
+        height:calc(100% - 40px);
+        background: $borderColor;
+        top:20px;
+        right:0;
+        margin:-1px 0;
+      }
       display: flex;
-      padding: 0 5px;
+      padding: 0 5px 0 0;
       align-items: center;
-      border-right: 1px solid #e6e6e6;
+      /*border-right: 1px solid #e6e6e6;*/
       .el-radio-button__inner,.el-checkbox-button span{
         padding:5px;
+        margin:0 0 0 3px;
+        border-radius:5px;
       }
       .el-radio-button:not(.is-active) span,.el-checkbox-button:not(.is-checked) span{
-        color:rgba(0,0,0,0.25);
+        color:$borderColor;
         border:none;
-      }
-      .el-button{
-        width:35px;
+        /*background: none;*/
       }
       .operatorSelector{
         width: 80px
       }
     }
-    ul{
-      list-style: none;
-      margin:0;
-      li{
-        display: block;
-        padding: 2px;
-        margin: 0;
+    .addRemoveQuery{
+      .el-button{
+        width:35px;
       }
     }
-  }
-  h1, h2 {
-    font-weight: normal;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-
-  a {
-    color: #42b983;
+    ul.subQueries{
+      list-style: none;
+      margin:0;
+      padding:0;
+      li{
+        display: block;
+        padding: 2px 0;
+        margin: 0;
+      }
+      .addSubqueryButton{
+        width: 401px;
+        background: #f5f5f5;
+        margin: 3px 0 0 47px;
+        display: block;
+      }
+    }
   }
 </style>

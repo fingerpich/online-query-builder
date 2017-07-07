@@ -6,22 +6,25 @@ export default Vue.component('operator-builder', {
   },
   template: `
     <div class="operator">
-      <div class="operatorScope">
-        <el-button v-on:click="removeSubquery" v-if="!jsonData.root" type="text" class="closeButton">×</el-button>
+      <div class="operatorScope" v-bind:class="{ 'has-sub-query': hasSubQuery}">
         <el-radio-group v-model="jsonData.operator" v-if="hasSubQuery">
           <el-radio-button label="OR" key="OR"></el-radio-button>
           <el-radio-button label="AND" key="AND"></el-radio-button>
         </el-radio-group>
         <el-checkbox-button v-else label="NOT" key="NOT"></el-checkbox-button>
-        <el-button v-on:click="addSubquery" type="text" class="addButton">+</el-button>
       </div>
-      <ul v-if="hasSubQuery">
+      <ul class="subQueries" v-if="hasSubQuery">
         <li v-for="q in jsonData.subQueries">
-          <sub-operator-builder v-on:operatorChange="onChange" :json-data="q"></sub-operator-builder>
+          <sub-operator-builder v-on:removeMe="removeSubquery" v-on:operatorChange="onChange" :json-data="q"></sub-operator-builder>
         </li>
+        <el-button v-on:click="addSubquery" type="text" class="addSubqueryButton">+</el-button>
       </ul>
-      <div v-else>
+      <div class="aQuery" v-else>
         <field-query v-on:change="onChange" :query="jsonData.query"></field-query>
+      </div>
+      <div class="addRemoveQuery" v-if="!hasSubQuery">
+        <el-button v-on:click="addSubquery" type="text" class="addButton">+</el-button>
+        <el-button v-on:click="removeMe" v-if="!jsonData.root" type="text" class="closeButton">×</el-button>      
       </div>
     </div>
   `,
@@ -63,9 +66,20 @@ export default Vue.component('operator-builder', {
       }
       this.jsonData.subQueries.push({operator: '', query: {field: '', operator: '', input: ''}})
     },
-    removeSubquery: function () {
+    removeMe: function () {
       if (!this.hasSubQuery) {
-        this.$emit('removeMe')
+        this.$emit('removeMe', this.jsonData)
+      }
+    },
+    removeSubquery: function (e) {
+      const index = this.jsonData.subQueries.indexOf(e)
+      if (this.jsonData.subQueries.length === 2) {
+        const child = this.jsonData.subQueries[1 - index]
+        Vue.set(this.jsonData, 'subQueries', child.subQueries)
+        Vue.set(this.jsonData, 'operator', child.operator)
+        Vue.set(this.jsonData, 'query', child.query)
+      } else {
+        this.jsonData.subQueries.splice(index, 1)
       }
     }
   }
