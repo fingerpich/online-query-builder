@@ -17,7 +17,11 @@ export default Vue.component('operator-builder', {
         <li v-for="q in jsonData.subQueries">
           <sub-operator-builder v-on:removeMe="removeSubquery" v-on:operatorChange="onChange" :json-data="q"></sub-operator-builder>
         </li>
-        <el-button v-on:click="addSubquery" type="text" class="addSubqueryButton">+</el-button>
+        <li class="newItem">
+          <div class="operatorScope"></div>
+          <el-button v-on:click="addSubquery" type="text" class="addSubqueryButton">+</el-button>
+        </li>
+        
       </ul>
       <div class="aQuery" v-else>
         <field-query v-on:change="onChange" :query="jsonData.query"></field-query>

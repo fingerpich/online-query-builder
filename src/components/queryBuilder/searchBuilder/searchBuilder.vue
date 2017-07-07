@@ -71,7 +71,7 @@
         position:absolute;
         width:1px;
         height:80%;
-        height:calc(100% - 40px);
+        height:calc(100% - 42px);
         background: $borderColor;
         top:20px;
         right:0;
@@ -111,9 +111,21 @@
       }
       .addSubqueryButton{
         width: 401px;
-        background: #f5f5f5;
-        margin: 3px 0 0 47px;
+        border: 1px solid lighten($borderColor,3%);
+        margin: 3px 0 0;
         display: block;
+      }
+      .newItem{
+        display:flex;
+        .operatorScope{
+          &::before{
+            background: lighten($borderColor,5%);
+          }
+          width:42px;
+        }
+        .addSubqueryButton {
+
+        }
       }
     }
   }
