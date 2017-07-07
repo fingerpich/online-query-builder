@@ -8,8 +8,7 @@
       <el-table
         :data="list"
         border
-        style="width: 100%"
-        height="250">
+        style="width: 100%">
         <el-table-column
           prop="title"
           label="title"
@@ -49,6 +48,14 @@
           label="category"
         ></el-table-column>
       </el-table>
+      <h1> </h1>
+      <div class="block">
+        <el-pagination
+          layout="prev, pager, next"
+          v-on:current-change="changePage"
+          :total="1000">
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -62,6 +69,18 @@
       QueryBuilder, headMenu
     },
     name: 'queryEditor',
+    methods: {
+      changePage: function (pageNumber) {
+        window.location.hash = '#/load/' + this.$route.params.id + '/' + pageNumber
+      }
+    },
+    watch: {
+      '$route': function () {
+        services.getResult(this.$route.params.id).then(function (results) {
+          this.list = results
+        }.bind(this))
+      }
+    },
     created () {
       services.getResult(this.$route.params.id).then(function (results) {
         this.list = results

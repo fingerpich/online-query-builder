@@ -128,7 +128,7 @@
   .level{
     padding:50px;
     min-height: 150px;
-    margin:10px;
+    margin:0 10px;
     border-top: 1px solid #e5e5e5;
   }
 </style>

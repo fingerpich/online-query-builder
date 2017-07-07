@@ -26,6 +26,11 @@ export default new Router({
       path: '/load/:id',
       name: 'QueryResult',
       component: QueryResult
+    },
+    {
+      path: '/load/:id/:page',
+      name: 'QueryResult',
+      component: QueryResult
     }
   ]
 })
