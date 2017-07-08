@@ -71,7 +71,7 @@ class RestResource {
     // return axios.get(serverURL + 'dynamic_reports?user_id=1')
     //   .then(response => {
     //     response.data.items.map(s => { s.name = s.reportname; s.id = s.report_id })
-    //     return response.data.items.map
+    //     return response.data.items
     //   })
     //   .catch(e => {
     //     this.errors.push(e)

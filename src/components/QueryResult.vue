@@ -2,6 +2,7 @@
   <div class="hello">
     <head-menu></head-menu>
     <div class="queryText">
+      <strong>SELECT </strong>
       <a :href="'#/edit/'+$route.params.id">edit query</a>
     </div>
     <div>
