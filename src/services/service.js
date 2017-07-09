@@ -15,13 +15,13 @@ class RestResource {
     //     this.errors.push(e)
     //   })
     return Promise.resolve([
-      {key: 'id', value: 'id', name: 'id', has_group: true, has_sort: true},
-      {key: 'name', value: 'name', name: 'name', has_group: true, has_sort: true},
-      {key: 'title', value: 'title', name: 'title', has_group: true, has_sort: false},
-      {key: 'content', value: 'content', name: 'content', has_group: true, has_sort: true},
-      {key: 'date', value: 'date', name: 'date', has_group: false, has_sort: false},
-      {key: 'likes', value: 'likes', name: 'likes', has_group: false, has_sort: true},
-      {key: 'score', value: 'score', name: 'score', has_group: false, has_sort: false}
+      {key: 'id', value: 'id', name: 'id', type: 'int', has_group: true, has_sort: true},
+      {key: 'name', value: 'name', name: 'name', type: 'string', has_group: true, has_sort: true},
+      {key: 'title', value: 'title', name: 'title', type: 'string', has_group: true, has_sort: false},
+      {key: 'content', value: 'content', name: 'content', type: 'string', has_group: true, has_sort: true},
+      {key: 'date', value: 'date', name: 'date', type: 'date', has_group: false, has_sort: false},
+      {key: 'likes', value: 'likes', name: 'likes', type: 'int', has_group: false, has_sort: true},
+      {key: 'score', value: 'score', name: 'score', type: 'int', has_group: false, has_sort: false}
     ])
   }
   getGroupByFields () {

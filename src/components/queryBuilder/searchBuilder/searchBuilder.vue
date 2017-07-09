@@ -15,7 +15,7 @@
     if (jsonData.subQueries) {
       return ' ( ' + jsonData.subQueries.map((subQuery) => { return generateQuery(subQuery) }).join(' ' + jsonData.operator + ' ') + ' ) '
     } else {
-      return jsonData.operator + jsonData.query.q
+      return ((jsonData.operator === true) ? '-' : '') + jsonData.query.q
     }
   }
   export default {
@@ -45,7 +45,11 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
   .generatedQuery{
-    padding: 40px 0 0;
+    margin: 40px 0 0;
+    padding: 10px;
+    color: #969696;
+    font-family: monospace;
+    font-size: 12px;
   }
   .operatorGenerator{
     display: flex;

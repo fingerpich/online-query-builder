@@ -1,6 +1,6 @@
 <template>
   <div class="fieldOfQuery">
-    <el-select v-model="query.field" clearable placeholder="Select a field" v-on:change="onChange">
+    <el-select v-model="query.field" clearable placeholder="Field" v-on:change="fieldChanged">
       <el-option
         v-for="field in fields"
         :key="field.value"
@@ -8,16 +8,21 @@
         :value="field.value">
       </el-option>
     </el-select>
-    <el-select v-model="query.operator" clearable placeholder="Select an operator" v-on:change="onChange">
+    <el-select v-bind:disabled="!query.field" v-model="query.operator" clearable placeholder="Operator" v-on:change="onChange">
       <el-option
-        v-for="operator in operators"
+        v-for="operator in getFieldOperator()"
         :key="operator.value"
         :label="operator.label"
         :value="operator.value">
       </el-option>
     </el-select>
-    <el-input placeholder="Please input" v-on:change="onChange" v-model="query.input"></el-input>
-
+    <span v-if="query.operator!='between'">
+      <el-input v-bind:disabled="!query.field || !query.operator" placeholder="match" v-on:change="onChange" v-model="query.input"></el-input>
+    </span>
+    <span v-else>
+      <el-input v-bind:disabled="!query.field" placeholder="match" v-on:change="onChange" v-model="inputFrom"></el-input>
+      <el-input v-bind:disabled="!query.field" placeholder="match" v-on:change="onChange" v-model="inputTo"></el-input>
+    </span>
   </div>
 </template>
 
@@ -26,6 +31,11 @@
   export default {
     name: 'fieldQuery',
     props: ['query'],
+    computed: {
+      fieldOperators: function () {
+
+      }
+    },
     created () {
       services.getFields().then(function (fields) {
         this.fields = fields
@@ -33,23 +43,68 @@
     },
     data () {
       return {
+        inputFrom: '',
+        inputTo: '',
         matchInput: '',
-        fields: [{label: 'id', value: 'id'}, {label: 'content', value: 'content'}, {label: 'date', value: 'date'}],
+        fields: [{label: 'id', value: 'id', type: 'int'}, {label: 'content', value: 'content', type: 'string'}, {label: 'date', value: 'date', type: 'string'}],
         operators: [
-          {label: 'equal', value: '='},
-          {label: 'not equal', value: '!='},
-          {label: 'greater than', value: '>'},
-          {label: 'less than', value: '<'},
-          {label: 'contain', value: 'reg'},
-          {label: 'between', value: '[]'}
+          {label: 'equal', value: 'equal', types: 'int,string,date'},
+//          {label: 'not equal', value: 'notEqual', types: 'int,string,date'},
+          {label: 'greater than', value: 'gt', types: 'int,date'},
+          {label: 'less than', value: 'lt', types: 'int,date'},
+          {label: 'contain', value: 'contain', types: 'string'},
+          {label: 'between', value: 'between', types: 'int,date'}
         ],
         selectedOperator: '',
         selectedField: ''
       }
     },
     methods: {
+      getFieldOperator () {
+        const fieldType = this.getFieldType()
+        return this.operators.filter(function (operator) { return operator.types.indexOf(fieldType) > -1 })
+      },
+      getFieldType () {
+        if (this.fields) {
+          const filtered = this.fields.filter(function (field) {
+            return field.value === this.query.field
+          }.bind(this))
+          if (filtered && filtered[0]) {
+            return filtered[0].type
+          }
+        }
+        return ''
+      },
+      fieldChanged: function (e) {
+        this.query.operator = ''
+        this.query.input = ''
+        this.onChange(e)
+      },
       onChange: function (e) {
-        this.query.q = this.query.field + ' ' + this.query.operator + ' ' + this.query.input
+        const fieldType = this.getFieldType()
+        let output = ''
+        const operator = this.query.operator
+        const field = this.query.field
+        const input = this.query.input
+
+        if (operator === 'lt') {
+          output = field + ' : [ * TO ' + input + ' ] '
+        } else if (operator === 'gt') {
+          output = field + ' : [ ' + input + ' TO * ] '
+        } else if (operator === 'between') {
+          output = field + ' : [' + this.inputFrom + ' TO ' + this.inputTo + ']'
+        } else if (operator === 'contain') {
+          output = field + ' : *' + input + '*'
+        } else if (operator === 'equal') {
+          output = field + ' : '
+          if (fieldType === 'string') {
+            output += '"' + input + '"'
+          } else {
+            output += input
+          }
+        }
+        this.query.q = output
+//      this.query.q = this.query.field + ' ' + this.query.operator + ' ' + this.query.input
         this.$emit('change')
       }
     },

@@ -7,11 +7,11 @@ export default Vue.component('operator-builder', {
   template: `
     <div class="operator">
       <div class="operatorScope" v-bind:class="{ 'has-sub-query': hasSubQuery}">
-        <el-radio-group v-model="jsonData.operator" v-if="hasSubQuery">
+        <el-radio-group v-model="jsonData.operator" v-on:change="onChange" v-if="hasSubQuery">
           <el-radio-button label="OR" key="OR"></el-radio-button>
           <el-radio-button label="AND" key="AND"></el-radio-button>
         </el-radio-group>
-        <el-checkbox-button v-else label="NOT" key="NOT"></el-checkbox-button>
+        <el-checkbox-button v-model="jsonData.operator" v-on:change="onChange" v-else label="NOT" key="not" value="-"></el-checkbox-button>
       </div>
       <ul class="subQueries" v-if="hasSubQuery">
         <li v-for="q in jsonData.subQueries">
@@ -19,7 +19,7 @@ export default Vue.component('operator-builder', {
         </li>
         <li class="newItem">
           <div class="operatorScope"></div>
-          <el-button v-on:click="addSubquery" type="text" class="addSubqueryButton">+</el-button>
+          <el-button v-on:click="addSubquery" type="text" class="addSubqueryButton" icon="plus"></el-button>
         </li>
         
       </ul>
@@ -27,8 +27,8 @@ export default Vue.component('operator-builder', {
         <field-query v-on:change="onChange" :query="jsonData.query"></field-query>
       </div>
       <div class="addRemoveQuery" v-if="!hasSubQuery">
-        <el-button v-on:click="addSubquery" type="text" class="addButton">+</el-button>
-        <el-button v-on:click="removeMe" v-if="!jsonData.root" type="text" class="closeButton">×</el-button>      
+        <el-button v-on:click="addSubquery" v-bind:disabled="!jsonData.query.operator" type="text" class="addButton" icon="share"></el-button>
+        <el-button v-on:click="removeMe" v-if="!jsonData.root" type="text" class="closeButton" icon="delete"></el-button>      
       </div>
     </div>
   `,
@@ -64,8 +64,8 @@ export default Vue.component('operator-builder', {
     },
     addSubquery: function () {
       if (!this.hasSubQuery) {
+        Vue.set(this.jsonData, 'subQueries', [{operator: this.jsonData.operator, query: this.jsonData.query}])
         Vue.set(this.jsonData, 'operator', 'AND')
-        Vue.set(this.jsonData, 'subQueries', [{operator: '', query: this.jsonData.query}])
         Vue.set(this.jsonData, 'query', '')
       }
       this.jsonData.subQueries.push({operator: '', query: {field: '', operator: '', input: ''}})
