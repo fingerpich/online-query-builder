@@ -5,13 +5,13 @@
         <a href="#/">Solr Query builder</a>
       </el-menu-item>
       <el-submenu index="2">
-        <template slot="title">Queries</template>
+        <template slot="title">گزارش ها</template>
         <el-menu-item index="2-1" v-for="report in reports">
           <a :href="'#load/' + report.id">{{report.name}}</a>
         </el-menu-item>
       </el-submenu>
       <el-menu-item index="3">
-        <a href="#/new">New+</a>
+        <a href="#/new">گزارش جدید+</a>
       </el-menu-item>
     </el-menu>
   </div>
