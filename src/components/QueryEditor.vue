@@ -1,8 +1,6 @@
 <template>
   <div class="hello">
     <head-menu></head-menu>
-    <!--<img src="./../assets/logo.png">-->
-    <!--<h1>Solr Query builder</h1>-->
     <query-builder></query-builder>
   </div>
 </template>
@@ -29,7 +27,6 @@
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 </style>

@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-menu theme="dark" class="el-menu-demo" mode="horizontal">
-      <el-menu-item index="1">Solr Query builder</el-menu-item>
+      <el-menu-item index="1">
+        <a href="#/">Solr Query builder</a>
+      </el-menu-item>
       <el-submenu index="2">
         <template slot="title">Queries</template>
         <el-menu-item index="2-1" v-for="report in reports">
@@ -33,3 +35,14 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  .el-menu-item {
+    padding: 0;
+    a{
+      padding:0 5px;
+      display: block;
+      text-decoration: none;
+    }
+  }
+</style>

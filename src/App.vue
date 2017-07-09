@@ -16,10 +16,10 @@ export default {
   }
 
   .el-menu--dark{
-    background:#673ab7;
+    background:#20a0ff;
   }
   .el-menu--horizontal.el-menu--dark .el-menu-item:hover, .el-menu--horizontal.el-menu--dark .el-submenu__title:hover{
-    background: #7f53ce;
+    background: #67bbff;
   }
   .el-menu--horizontal .el-submenu .el-submenu__icon-arrow,
   .el-menu--dark .el-menu-item, .el-menu--dark .el-submenu__title {
