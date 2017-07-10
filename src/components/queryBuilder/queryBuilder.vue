@@ -27,7 +27,7 @@
 
     <div class="level">
       <h4>Search Query</h4>
-      <search-builder :query="query.query"></search-builder>
+      <search-builder :initialData="query.search"></search-builder>
     </div>
 
     <div class="level sort">
@@ -120,7 +120,19 @@
       return {
         contents: [{label: 'page', value: 'page'}, {label: 'user', value: 'user'}, {label: 'post', value: 'post'}, {label: 'comment', value: 'comment'}, {label: 'group', value: 'group'}],
         sources: [{label: 'source1', value: 'source1'}, {label: 'source2', value: 'source2'}],
-        query: { report_name: '', sort_type: 'asc', sort_fields: [], groupBy: [], source: 'source1', source_content: 'document', query: {}, selected_fields: [] },
+        query: {
+          report_name: '',
+          sort_type: 'asc',
+          sort_fields: [],
+          groupBy: [],
+          source: 'source1',
+          source_content: 'document',
+          selected_fields: [],
+          search: {
+            jsonQuery: {operator: '', query: {field: '', operator: '', input: ''}, root: true},
+            query: ''
+          }
+        },
         fields: [{label: 'id', value: '_id'}, {label: 'name', value: '_name'}]
       }
     }

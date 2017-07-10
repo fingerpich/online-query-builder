@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="operatorGenerator">
-      <operator-builder v-on:operatorChange="queryChanged" :json-data="query"></operator-builder>
+      <operator-builder v-on:operatorChange="queryChanged" :json-data="initialData.jsonQuery"></operator-builder>
     </div>
     <div class="generatedQuery">
-      {{this.generatedQuery}}
+      {{this.initialData.query}}
     </div>
   </div>
 </template>
@@ -22,21 +22,20 @@
     components: {
       operatorBuilder
     },
+    props: {
+      initialData: Object
+    },
+    created () {
+
+    },
     methods: {
       queryChanged: function () {
-        this.generatedQuery = generateQuery(this.query)
-      }
-    },
-    events: {
-      getQuery: function () {
-        return this.generatedQuery
+        this.initialData.query = generateQuery(this.initialData.jsonQuery)
       }
     },
     name: 'searchBuilder',
     data () {
       return {
-        generatedQuery: '',
-        query: {operator: '', query: {field: '', operator: '', input: ''}, root: true}
       }
     }
   }
