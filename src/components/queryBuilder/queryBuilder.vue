@@ -62,22 +62,13 @@
       </el-select>
     </div>
 
-    <!--<div class="level outputFields" style="align-items: flex-start">-->
-      <!--<el-transfer-->
-        <!--v-model="query.selected_fields"-->
-        <!--:render-content="renderFunc"-->
-        <!--:titles="['fields', 'selected']"-->
-        <!--:button-texts="['To left', 'To right']"-->
-        <!--:footer-format="{-->
-      <!--noChecked: '${total}',-->
-      <!--hasChecked: '${checked}/${total}'-->
-    <!--}"-->
-        <!--@change="handleChange"-->
-        <!--:data="fields">-->
-        <!--<el-button class="transfer-footer" slot="left-footer" size="small">Operation</el-button>-->
-        <!--<el-button class="transfer-footer" slot="right-footer" size="small">Operation</el-button>-->
-      <!--</el-transfer>-->
-    <!--</div>-->
+    <div class="level outputFields" style="align-items: flex-start">
+      <el-transfer
+        v-model="query.selected_fields"
+        :titles="['all fields', 'output fields']"
+        :data="fields">
+      </el-transfer>
+    </div>
 
     <div class="level">
       <div style="padding:20px"></div>
@@ -109,6 +100,10 @@
         this.query.sort_fields = []
         this.query.groupBy = []
         this.query.selected_fields = []
+        this.query.search = {
+          jsonQuery: {operator: '', query: {field: '', operator: '', input: ''}, root: true},
+          query: ''
+        }
       }
     },
     created () {
@@ -133,7 +128,7 @@
             query: ''
           }
         },
-        fields: [{label: 'id', value: '_id'}, {label: 'name', value: '_name'}]
+        fields: [{label: 'id', value: '_id', key: '_id'}]
       }
     }
   }
@@ -149,5 +144,8 @@
   .sortSwitch .el-switch__core {
     background: #20a0ff !important;
     border-color: transparent !important;
+  }
+  .el-transfer-panel__item.el-checkbox{
+    text-align: left;
   }
 </style>

@@ -6,7 +6,7 @@
       </el-menu-item>
       <el-submenu index="2">
         <template slot="title">Queries</template>
-        <el-menu-item index="2-1" v-for="report in reports">
+        <el-menu-item index="2-1" :key="report.id" v-for="report in reports">
           <a :href="'#load/' + report.id">{{report.name}}</a>
         </el-menu-item>
       </el-submenu>

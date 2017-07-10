@@ -18,13 +18,13 @@ class RestResource {
     // value had better to be uniqe
     // type could be string | int | date
     return Promise.resolve([
-      {value: 'id', name: 'id', type: 'int', has_group: true, has_sort: true},
-      {value: 'name', name: 'name', type: 'string', has_group: true, has_sort: true},
-      {value: 'title', name: 'title', type: 'string', has_group: true, has_sort: false},
-      {value: 'content', name: 'content', type: 'string', has_group: true, has_sort: true},
-      {value: 'date', name: 'date', type: 'date', has_group: false, has_sort: false},
-      {value: 'likes', name: 'likes', type: 'int', has_group: false, has_sort: true},
-      {value: 'score', name: 'score', type: 'int', has_group: false, has_sort: false}
+      {key: 'id', value: 'id', name: 'id', type: 'int', has_group: true, has_sort: true},
+      {key: 'name', value: 'name', name: 'name', type: 'string', has_group: true, has_sort: true},
+      {key: 'title', value: 'title', name: 'title', type: 'string', has_group: true, has_sort: false},
+      {key: 'content', value: 'content', name: 'content', type: 'string', has_group: true, has_sort: true},
+      {key: 'date', value: 'date', name: 'date', type: 'date', has_group: false, has_sort: false},
+      {key: 'likes', value: 'likes', name: 'likes', type: 'int', has_group: false, has_sort: true},
+      {key: 'score', value: 'score', name: 'score', type: 'int', has_group: false, has_sort: false}
     ])
   }
   getReports () {
