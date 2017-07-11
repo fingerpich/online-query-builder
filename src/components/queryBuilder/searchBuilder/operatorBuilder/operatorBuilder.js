@@ -21,7 +21,6 @@ export default Vue.component('operator-builder', {
           <div class="operatorScope"></div>
           <el-button v-on:click="addSubquery" type="text" class="addSubqueryButton" icon="plus"></el-button>
         </li>
-        
       </ul>
       <div class="aQuery" v-else>
         <field-query v-on:change="onChange" :query="jsonData.query"></field-query>
