@@ -142,9 +142,9 @@
             query: ''
           }
         },
-        fields: [{label: 'id', value: '_id', key: '_id'}],
-        sortable_fields: [{label: 'id', value: '_id', key: '_id'}],
-        groupable_fields: [{label: 'id', value: '_id', key: '_id'}]
+        fields: [],
+        sortable_fields: [],
+        groupable_fields: []
       }
     }
   }
