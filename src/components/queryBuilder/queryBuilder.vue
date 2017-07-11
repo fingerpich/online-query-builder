@@ -101,11 +101,6 @@
         this.query.sort_type = 'asc'
         this.query.sort_fields = []
         this.query.groupBy = []
-        if (this.query.source === 'jam') {
-          this.query.source_content = 'document'
-        } else {
-          this.query.source_content = 'page'
-        }
         this.query.selected_fields = []
         this.query.search = {
           jsonQuery: {operator: '', query: {field: '', operator: '', input: ''}, root: true},
