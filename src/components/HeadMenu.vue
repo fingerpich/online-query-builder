@@ -24,7 +24,7 @@
     name: 'headMenu',
     methods: {},
     created () {
-      services.getReports().then(function (reports) {
+      services.getQueries().then(function (reports) {
         this.reports = reports
       }.bind(this))
     },

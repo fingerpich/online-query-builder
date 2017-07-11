@@ -42,7 +42,7 @@
       </el-switch>
       <el-select v-model="query.sort_fields" multiple placeholder="Select">
         <el-option
-          v-for="item in fields"
+          v-for="item in sortable_fields"
           :key="item.value"
           :label="item.label"
           :value="item.value">
@@ -54,7 +54,7 @@
       <h4>Group</h4>
       <el-select v-model="query.groupBy" multiple placeholder="Select">
         <el-option
-          v-for="item in fields"
+          v-for="item in groupable_fields"
           :key="item.value"
           :label="item.label"
           :value="item.value">
@@ -110,6 +110,12 @@
       services.getFields().then(function (fields) {
         this.fields = fields
       }.bind(this))
+      services.getSortableFields().then(function (fields) {
+        this.sortable_fields = fields
+      }.bind(this))
+      services.getGroupableFields().then(function (fields) {
+        this.groupable_fields = fields
+      }.bind(this))
     },
     data () {
       return {
@@ -128,7 +134,9 @@
             query: ''
           }
         },
-        fields: [{label: 'id', value: '_id', key: '_id'}]
+        fields: [{label: 'id', value: '_id', key: '_id'}],
+        sortable_fields: [{label: 'id', value: '_id', key: '_id'}],
+        groupable_fields: [{label: 'id', value: '_id', key: '_id'}]
       }
     }
   }

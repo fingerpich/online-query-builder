@@ -2,18 +2,26 @@ import axios from 'axios'
 
 const serverURL = 'api/'
 class RestResource {
-  errors=[]
+  errors = [];
+
+  fields = null;
   getFields () {
-    // return axios.get(serverURL + 'dynamic_fields', {withCredentials: true})
-    //   .then(response => {
-    //     response.data.items.map((field) => {
-    //       field.key = field.value = field.name
+    // if (this.fields) {
+    //   return Promise.resolve(this.fields)
+    // } else {
+    //   this.fields = axios.get(serverURL + 'dynamic_fields', {withCredentials: true})
+    //     .then(response => {
+    //       response.data.items.map((field) => {
+    //         field.key = field.value = field.name
+    //       })
+    //       this.fields = response.data.items
+    //       return this.fields
     //     })
-    //     return response.data.items
-    //   })
-    //   .catch(e => {
-    //     this.errors.push(e)
-    //   })
+    //     .catch(e => {
+    //       this.errors.push(e)
+    //     })
+    //   return this.fields
+    // }
 
     // value had better to be uniqe
     // type could be string | int | date
@@ -27,15 +35,39 @@ class RestResource {
       {key: 'score', value: 'score', name: 'score', type: 'int', has_group: false, has_sort: false}
     ])
   }
-  getReports () {
-    // return axios.get(serverURL + 'dynamic_reports?user_id=1')
-    //   .then(response => {
-    //     response.data.items.map(s => { s.name = s.reportname; s.id = s.report_id })
-    //     return response.data.items
-    //   })
-    //   .catch(e => {
-    //     this.errors.push(e)
-    //   })
+
+  getSortableFields () {
+    return new Promise((resolve, reject) => {
+      this.getFields().then((fields) => {
+        resolve(fields.filter((field) => field.has_sort))
+      })
+    })
+  }
+
+  getGroupableFields () {
+    return new Promise((resolve, reject) => {
+      this.getFields().then((fields) => {
+        resolve(fields.filter((field) => field.has_group))
+      })
+    })
+  }
+
+  reports = null;
+  getQueries () {
+    // if (this.reports) {
+    //   return Promise.resolve(this.reports)
+    // } else {
+    //   this.reports = axios.get(serverURL + 'dynamic_reports?user_id=1')
+    //     .then(response => {
+    //       response.data.items.map(s => { s.name = s.reportname; s.id = s.report_id })
+    //       this.reports = response.data.items
+    //       return this.reports
+    //     })
+    //     .catch(e => {
+    //       this.errors.push(e)
+    //     })
+    //   return this.reports
+    // }
     return Promise.resolve([
       {id: 1, name: 'importants'},
       {id: 2, name: 'related with'},
@@ -44,7 +76,8 @@ class RestResource {
       {id: 5, name: 'important in last month'}
     ])
   }
-  getReport (id) {
+
+  getQuery (id) {
     // return axios.get(serverURL + 'dynamic_reports?user_id=1')
     //   .then(response => {
     //     return response.data
@@ -52,10 +85,12 @@ class RestResource {
     //   .catch(e => {
     //     this.errors.push(e)
     //   })
-    return Promise.resolve({'report_name': 'popularity', 'sort_type': 'asc', 'sort_fields': ['likes'], 'groupBy': ['date'], 'source': 'source2', 'source_content': 'post', 'selected_fields': [], 'search': {'jsonQuery': {'operator': 'AND', 'query': '', 'root': true, 'subQueries': [{'operator': 'OR', 'query': '', 'subQueries': [{'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'mojtaba', 'q': 'content : *mojtaba*'}}, {'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'fingerpich', 'q': 'content : *fingerpich*'}}]}, {'operator': '', 'query': {'field': 'likes', 'operator': 'gt', 'input': '20', 'q': 'likes : [ 20 TO * ] '}}]}, 'query': ' (  ( content : *mojtaba* OR content : *fingerpich* )  AND likes : [ 20 TO * ]  ) '}})
+    // const filteredReport = this.reports.filter((report) => report.id === id)
+    // return Promise.resolve(filteredReport.length ? filteredReport[0] : {})
+    // return Promise.resolve({'report_name': 'popularity', 'sort_type': 'asc', 'sort_fields': ['likes'], 'groupBy': ['date'], 'source': 'source2', 'source_content': 'post', 'selected_fields': [], 'search': {'jsonQuery': {'operator': 'AND', 'query': '', 'root': true, 'subQueries': [{'operator': 'OR', 'query': '', 'subQueries': [{'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'mojtaba', 'q': 'content : *mojtaba*'}}, {'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'fingerpich', 'q': 'content : *fingerpich*'}}]}, {'operator': '', 'query': {'field': 'likes', 'operator': 'gt', 'input': '20', 'q': 'likes : [ 20 TO * ] '}}]}, 'query': ' (  ( content : *mojtaba* OR content : *fingerpich* )  AND likes : [ 20 TO * ]  ) '}})
   }
-  getResult (queryID) {
-    // return axios.get(serverURL + 'dynamic_load?report_id=' + queryID)
+  getResult (queryID, page) {
+    // return axios.get(serverURL + 'dynamic_load?report_id=' + queryID + '&&page='+page)
     //   .then(response => {
     //     // JSON responses are automatically parsed.
     //     return response.data.items

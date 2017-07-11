@@ -77,13 +77,13 @@
     },
     watch: {
       '$route': function () {
-        services.getResult(this.$route.params.id).then(function (results) {
+        services.getQueryResult(this.$route.params.id).then(function (results) {
           this.list = results
         }.bind(this))
       }
     },
     created () {
-      services.getResult(this.$route.params.id).then(function (results) {
+      services.getQueryResult(this.$route.params.id).then(function (results) {
         this.list = results
       }.bind(this))
     },
