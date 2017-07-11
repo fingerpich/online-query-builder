@@ -11,13 +11,7 @@
 
 <script>
   import operatorBuilder from './operatorBuilder/operatorBuilder'
-  function generateQuery (jsonData) {
-    if (jsonData.subQueries) {
-      return ' ( ' + jsonData.subQueries.map((subQuery) => { return generateQuery(subQuery) }).join(' ' + jsonData.operator + ' ') + ' ) '
-    } else {
-      return ((jsonData.operator === true) ? '-' : '') + jsonData.query.q
-    }
-  }
+  import * as databaseServices from '../../../services/database'
   export default {
     components: {
       operatorBuilder
@@ -30,7 +24,7 @@
     },
     methods: {
       queryChanged: function () {
-        this.initialData.query = generateQuery(this.initialData.jsonQuery)
+        this.initialData.query = databaseServices.extractSearchQuery(this.initialData.jsonQuery)
       }
     },
     name: 'searchBuilder',
