@@ -37,17 +37,17 @@ class RestResource {
   }
 
   getSortableFields () {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       this.getFields().then((fields) => {
-        resolve(fields.filter((field) => field.has_sort))
+        resolve(fields.filter((field) => field.sort))
       })
     })
   }
 
   getGroupableFields () {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       this.getFields().then((fields) => {
-        resolve(fields.filter((field) => field.has_group))
+        resolve(fields.filter((field) => field.group))
       })
     })
   }
@@ -90,8 +90,8 @@ class RestResource {
     // return Promise.resolve({'report_name': 'popularity', 'sort_type': 'asc', 'sort_fields': ['likes'], 'groupBy': ['date'], 'source': 'source2', 'source_content': 'post', 'selected_fields': [], 'search': {'jsonQuery': {'operator': 'AND', 'query': '', 'root': true, 'subQueries': [{'operator': 'OR', 'query': '', 'subQueries': [{'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'mojtaba', 'q': 'content : *mojtaba*'}}, {'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'fingerpich', 'q': 'content : *fingerpich*'}}]}, {'operator': '', 'query': {'field': 'likes', 'operator': 'gt', 'input': '20', 'q': 'likes : [ 20 TO * ] '}}]}, 'query': ' (  ( content : *mojtaba* OR content : *fingerpich* )  AND likes : [ 20 TO * ]  ) '}})
   }
 
-  getQueryResult (queryID) {
-    return axios.get(serverURL + 'dynamic_load?report_id=' + queryID)
+  getQueryResult (queryID, page) {
+    return axios.get(serverURL + 'dynamic_load?report_id=' + queryID + '&page=' + page)
       .then(response => {
         // JSON responses are automatically parsed.
         return response.data.items
@@ -129,6 +129,9 @@ class RestResource {
     // return Promise.resolve(arr.filter((a) => {
     //   return Math.random() > 0.5
     // }).slice(0, 10))
+    // const filteredReport = this.reports.filter((report) => report.id === id)
+    // return Promise.resolve(filteredReport.length ? filteredReport[0] : {})
+    // return Promise.resolve({'report_name': 'popularity', 'sort_type': 'asc', 'sort_fields': ['likes'], 'groupBy': ['date'], 'source': 'source2', 'source_content': 'post', 'selected_fields': [], 'search': {'jsonQuery': {'operator': 'AND', 'query': '', 'root': true, 'subQueries': [{'operator': 'OR', 'query': '', 'subQueries': [{'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'mojtaba', 'q': 'content : *mojtaba*'}}, {'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'fingerpich', 'q': 'content : *fingerpich*'}}]}, {'operator': '', 'query': {'field': 'likes', 'operator': 'gt', 'input': '20', 'q': 'likes : [ 20 TO * ] '}}]}, 'query': ' (  ( content : *mojtaba* OR content : *fingerpich* )  AND likes : [ 20 TO * ]  ) '}})
   }
 
   saveQuery (query) {
