@@ -1,4 +1,4 @@
-# online-query-builder
+# Online Query Builder
 Its a simple, powerful, customizable query builder enables you to quickly build complex queries without any programming knowledge on-the-go.
 ts written to generate Solr database but you could change it for another database.
 
