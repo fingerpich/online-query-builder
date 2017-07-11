@@ -26,20 +26,20 @@ class RestResource {
     // value had better to be uniqe
     // type could be string | int | date
     // return Promise.resolve([
-    //   {key: 'id', value: 'id', name: 'id', type: 'int', has_group: true, has_sort: true},
-    //   {key: 'name', value: 'name', name: 'name', type: 'string', has_group: true, has_sort: true},
-    //   {key: 'title', value: 'title', name: 'title', type: 'string', has_group: true, has_sort: false},
-    //   {key: 'content', value: 'content', name: 'content', type: 'string', has_group: true, has_sort: true},
-    //   {key: 'date', value: 'date', name: 'date', type: 'date', has_group: false, has_sort: false},
-    //   {key: 'likes', value: 'likes', name: 'likes', type: 'int', has_group: false, has_sort: true},
-    //   {key: 'score', value: 'score', name: 'score', type: 'int', has_group: false, has_sort: false}
+    //   {key: 'id', value: 'id', name: 'id', type: 'int', groupable: true, sortable: true},
+    //   {key: 'name', value: 'name', name: 'name', type: 'string', groupable: true, sortable: true},
+    //   {key: 'title', value: 'title', name: 'title', type: 'string', groupable: true, sortable: false},
+    //   {key: 'content', value: 'content', name: 'content', type: 'string', groupable: true, sortable: true},
+    //   {key: 'date', value: 'date', name: 'date', type: 'date', groupable: false, sortable: false},
+    //   {key: 'likes', value: 'likes', name: 'likes', type: 'int', groupable: false, sortable: true},
+    //   {key: 'score', value: 'score', name: 'score', type: 'int', groupable: false, sortable: false}
     // ])
   }
 
   getSortableFields () {
     return new Promise((resolve, reject) => {
       this.getFields().then((fields) => {
-        resolve(fields.filter((field) => field.sort))
+        resolve(fields.filter((field) => field.sortable))
       })
     })
   }
@@ -47,7 +47,7 @@ class RestResource {
   getGroupableFields () {
     return new Promise((resolve, reject) => {
       this.getFields().then((fields) => {
-        resolve(fields.filter((field) => field.group))
+        resolve(fields.filter((field) => field.groupable))
       })
     })
   }
@@ -132,6 +132,13 @@ class RestResource {
     // const filteredReport = this.reports.filter((report) => report.id === id)
     // return Promise.resolve(filteredReport.length ? filteredReport[0] : {})
     // return Promise.resolve({'report_name': 'popularity', 'sort_type': 'asc', 'sort_fields': ['likes'], 'groupBy': ['date'], 'source': 'source2', 'source_content': 'post', 'selected_fields': [], 'search': {'jsonQuery': {'operator': 'AND', 'query': '', 'root': true, 'subQueries': [{'operator': 'OR', 'query': '', 'subQueries': [{'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'mojtaba', 'q': 'content : *mojtaba*'}}, {'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'fingerpich', 'q': 'content : *fingerpich*'}}]}, {'operator': '', 'query': {'field': 'likes', 'operator': 'gt', 'input': '20', 'q': 'likes : [ 20 TO * ] '}}]}, 'query': ' (  ( content : *mojtaba* OR content : *fingerpich* )  AND likes : [ 20 TO * ]  ) '}})
+  }
+
+  getSources () {
+    return Promise.resolve([
+      {label: 'جام', value: 'jam', content: [{label: 'اسناد', value: 'document'}]},
+      {label: 'آشنا', value: 'ashna', content: [{label: 'صفحات', value: 'page'}, {label: 'کاربران', value: 'user'}, {label: 'پست ها', value: 'post'}, {label: 'کامنت ها', value: 'comment'}, {label: 'گروه ها', value: 'group'}]}
+    ])
   }
 
   saveQuery (query) {
