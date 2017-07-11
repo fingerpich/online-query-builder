@@ -14,7 +14,7 @@
       </div>
       <div style="margin:20px"></div>
       <div>
-        <el-select v-if="hasTables" v-model="query.source_content" placeholder="source content">
+        <el-select v-model="query.source_content" placeholder="source content">
           <el-option
             v-for="content in contents"
             :key="content.value"
@@ -86,9 +86,6 @@
       SearchBuilder
     },
     computed: {
-      hasTables () {
-        return this.query.source === 'source2'
-      }
     },
     name: 'queryBuilder',
     methods: {
@@ -96,6 +93,11 @@
         services.saveQuery(this.query)
       },
       onSourceChanged: function (e) {
+        const selectedSources = this.sources.filter((source) => source.value === this.query.source)
+        if (selectedSources && selectedSources[0] && selectedSources[0].content) {
+          this.contents = selectedSources[0].content
+          this.query.source_content = this.contents[0].value
+        }
         this.query.sort_type = 'asc'
         this.query.sort_fields = []
         this.query.groupBy = []
@@ -116,18 +118,24 @@
       services.getGroupableFields().then(function (fields) {
         this.groupable_fields = fields
       }.bind(this))
+      services.getSources().then(function (sources) {
+        this.sources = sources
+        this.query.source = sources[0].value
+        this.contents = sources[0].content
+        this.query.source_content = this.contents[0].value
+      }.bind(this))
     },
     data () {
       return {
-        contents: [{label: 'page', value: 'page'}, {label: 'user', value: 'user'}, {label: 'post', value: 'post'}, {label: 'comment', value: 'comment'}, {label: 'group', value: 'group'}],
-        sources: [{label: 'source1', value: 'source1'}, {label: 'source2', value: 'source2'}],
+        contents: [],
+        sources: [],
         query: {
           report_name: '',
           sort_type: 'asc',
           sort_fields: [],
           groupBy: [],
-          source: 'source1',
-          source_content: 'document',
+          source: '',
+          source_content: '',
           selected_fields: [],
           search: {
             jsonQuery: {operator: '', query: {field: '', operator: '', input: ''}, root: true},
