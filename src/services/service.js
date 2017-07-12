@@ -94,7 +94,7 @@ class RestResource {
     return axios.get(serverURL + 'dynamic_load?id=' + queryID + '&&page=' + page)
       .then(response => {
         // JSON responses are automatically parsed.
-        return response.data.items
+        return response.data.items[1]
       })
       .catch(e => {
         this.errors.push(e)
