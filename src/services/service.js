@@ -91,7 +91,7 @@ class RestResource {
   }
 
   getQueryResult (queryID, page) {
-    // return axios.get(serverURL + 'dynamic_load?report_id=' + queryID + '&&page='+page)
+    // return axios.get(serverURL + 'dynamic_load?id=' + queryID + '&&page='+page)
     //   .then(response => {
     //     // JSON responses are automatically parsed.
     //     return response.data.items
@@ -148,6 +148,10 @@ class RestResource {
       .catch(e => {
         this.errors.push(e)
       })
+  }
+
+  getSortQuery (fields, isAscending) {
+    return 'sort = ' + fields.join(',') + ' ' + (isAscending ? 'asc' : 'desc')
   }
 }
 
