@@ -10,44 +10,11 @@
         :data="list"
         border
         style="width: 100%">
-        <el-table-column
-          prop="title"
-          label="title"
+        <el-table-column v-for="col in columns"
+          :prop="col"
+          :label="col"
           >
         </el-table-column>
-        <el-table-column
-          prop="content"
-          label="content"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="published_date"
-          label="published_date"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="tag"
-          label="tag"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="keyword"
-          label="keyword"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="alexa_score"
-          label="alexa score"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="google_score"
-          label="google score"
-        ></el-table-column>
-        <el-table-column
-          prop="category"
-          label="category"
-        ></el-table-column>
       </el-table>
       <h1> </h1>
       <div class="block">
@@ -84,12 +51,16 @@
     },
     created () {
       services.getQueryResult(this.$route.params.id).then(function (results) {
-        this.list = results
+        if (results) {
+          this.list = results
+          this.columns = Object.keys(results[0])
+        }
       }.bind(this))
     },
     data () {
       return {
-        list: []
+        list: [],
+        columns: []
       }
     }
   }
