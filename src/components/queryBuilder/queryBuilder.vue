@@ -32,15 +32,16 @@
 
     <div class="level sort">
       <h4>مرتب سازی</h4>
+      <div>
       <el-switch
         class="sortSwitch"
-        v-model="query.sort_type"
+        v-model="query.sort.isAscending"
         on-color="#13ce66"
         on-text="▽"
         off-text="△"
         off-color="#ff4949">
       </el-switch>
-      <el-select v-model="query.sort_fields" multiple placeholder="Select">
+      <el-select v-model="query.sort.fields" multiple placeholder="Select">
         <el-option
           v-for="item in sortable_fields"
           :key="item.value"
@@ -48,6 +49,10 @@
           :value="item.value">
         </el-option>
       </el-select>
+      </div>
+      <div v-if="query.sort.fields.length" class="generatedQuery">
+        {{this.sortQuery}}
+      </div>
     </div>
 
     <div class="level group">
@@ -86,6 +91,9 @@
       SearchBuilder
     },
     computed: {
+      sortQuery: function () {
+        return services.getSortQuery(this.query.sort.fields, this.query.sort.isAscending)
+      }
     },
     name: 'queryBuilder',
     methods: {
@@ -131,8 +139,10 @@
         sources: [],
         query: {
           report_name: '',
-          sort_type: 'asc',
-          sort_fields: [],
+          sort: {
+            fields: [],
+            isAscending: true
+          },
           groupBy: [],
           source: '',
           source_content: '',
