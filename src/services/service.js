@@ -144,6 +144,7 @@ class RestResource {
   }
 
   saveQuery (query) {
+    query = JSON.parse(JSON.stringify(query))
     console.log(query)
     query.sort_fields = query.sort.fields
     query.sort_type = query.sort.isAscending ? 'asc' : 'desc'
@@ -156,7 +157,7 @@ class RestResource {
     delete query.search
 
     query.user_id = 1
-    return axios.post(serverURL + 'save', query)
+    return axios.post(serverURL + 'dynamic_save', query)
       .then(response => {
         console.log(response)
         return response
