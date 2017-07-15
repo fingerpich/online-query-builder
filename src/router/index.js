@@ -19,7 +19,7 @@ export default new Router({
     },
     {
       path: '/edit/:id',
-      name: 'QueryEditor',
+      name: 'editQuery',
       component: QueryEditor
     },
     {
