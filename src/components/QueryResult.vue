@@ -45,13 +45,13 @@
     },
     watch: {
       '$route': function () {
-        services.getQueryResult(this.$route.params.id).then(function (results) {
+        services.getQueryResult(this.$route.params.id, this.$route.params.page).then(function (results) {
           this.list = results
         }.bind(this))
       }
     },
     created () {
-      services.getQueryResult(this.$route.params.id).then(function (results) {
+      services.getQueryResult(this.$route.params.id, this.$route.params.page).then(function (results) {
         if (results) {
           this.list = results
           this.columns = Object.keys(results[0])
