@@ -13,6 +13,8 @@ class RestResource {
         .then(response => {
           response.data.items.map((field) => {
             field.key = field.value = field.name
+            field.sortable = field.sort
+            field.groupable = field.group
           })
           this.fields = response.data.items
           return this.fields
@@ -143,6 +145,17 @@ class RestResource {
 
   saveQuery (query) {
     console.log(query)
+    query.sort_fields = query.sort.fields
+    query.sort_type = query.sort.isAscending ? 'asc' : 'desc'
+    query.output_fields = query.selected_fields
+    query.string_query = query.search.query
+    query.json_query = query.search.jsonQuery
+
+    delete query.sort
+    delete query.selected_fields
+    delete query.search
+
+    query.user_id = 1
     return axios.post(serverURL + 'save', query)
       .then(response => {
         console.log(response)

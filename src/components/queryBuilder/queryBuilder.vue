@@ -161,6 +161,14 @@
 </script>
 
 <style lang="scss">
+  .queryBuilder{
+    width: 80%;
+    padding: 2px;
+    margin: 39px auto;
+    border: 1px solid #d6d6d6;
+    box-shadow: 0px 1px 3px 0 #999;
+    background: white;
+  }
   .level{
     padding:50px;
     min-height: 150px;

@@ -13,6 +13,7 @@ export default {
 <style>
   html,body{
     margin:0;
+    background: #eee;
   }
 
   .el-menu--dark{
@@ -25,6 +26,12 @@ export default {
   .el-menu--dark .el-menu-item, .el-menu--dark .el-submenu__title {
     color:#fff;
   }
+  .el-menu--horizontal .el-submenu .el-submenu__title,
+  .el-menu--horizontal .el-menu-item{
+    line-height: 70px;
+    height: 70px;
+  }
+
 
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;

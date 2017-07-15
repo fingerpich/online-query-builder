@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <head-menu>
-      <a :href="'#/edit/'+$route.params.id" class="editQuery">Edit Query</a>
+      <a :href="'#/edit/'+$route.params.id" class="editQuery">تغییر گزارش</a>
     </head-menu>
     <div>
       <el-table
