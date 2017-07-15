@@ -149,10 +149,6 @@ class RestResource {
         this.errors.push(e)
       })
   }
-
-  getSortQuery (fields, isAscending) {
-    return 'sort = ' + fields.join(',') + ' ' + (isAscending ? 'asc' : 'desc')
-  }
 }
 
 const services = new RestResource()
