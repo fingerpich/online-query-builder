@@ -67,7 +67,7 @@
       </el-select>
     </div>
 
-    <div class="level outputFields" style="align-items: flex-start">
+    <div class="level">
       <el-transfer
         v-model="query.selected_fields"
         :titles="['all fields', 'output fields']"
@@ -75,7 +75,7 @@
       </el-transfer>
     </div>
 
-    <div class="level">
+    <div class="save-query-container">
       <div style="padding:20px"></div>
       <el-input placeholder="query name" v-model="query.name" style="width:initial"></el-input>
       <el-button v-on:click="save" type="primary">ذخیره</el-button>
@@ -171,10 +171,17 @@
     background: white;
   }
   .level{
-    padding:50px;
-    min-height: 150px;
-    margin:0 10px;
-    border-top: 1px solid #e5e5e5;
+    padding: 50px;
+    min-height: 200px;
+    margin: 0 10px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .save-query-container{
+    padding:50px 0 100px;
   }
   .sortSwitch .el-switch__core {
     background: #20a0ff !important;
