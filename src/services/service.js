@@ -5,11 +5,16 @@ class RestResource {
   errors = [];
 
   fields = null;
-  getFields () {
+  getFields (source, sourceContent) {
     if (this.fields) {
       return Promise.resolve(this.fields)
     } else {
-      this.fields = axios.get(serverURL + 'dynamic_fields', {withCredentials: true})
+      this.fields = axios.get(serverURL + 'dynamic_fields', {
+        params: {
+          source: source,
+          source_content: sourceContent
+        },
+        withCredentials: true})
         .then(response => {
           response.data.items.map((field) => {
             field.key = field.value = field.name
@@ -59,7 +64,11 @@ class RestResource {
     if (this.reports) {
       return Promise.resolve(this.reports)
     } else {
-      this.reports = axios.get(serverURL + 'dynamic_reports?user_id=1')
+      this.reports = axios.get(serverURL + 'dynamic_reports', {
+        params: {
+          user_id: 1
+        }
+      })
         .then(response => {
           response.data.items.map(s => { s.name = s.reportname; s.id = s.report_id })
           this.reports = response.data.items
@@ -93,7 +102,13 @@ class RestResource {
   }
 
   getQueryResult (queryID, page) {
-    return axios.get(serverURL + 'dynamic_load?id=' + queryID + '&&page=' + page)
+    return axios.get(serverURL + 'dynamic_load', {
+      params: {
+        id: queryID,
+        page_number: page,
+        page_size: 10
+      }
+    })
       .then(response => {
         // JSON responses are automatically parsed.
         return response.data.items[1]
@@ -138,7 +153,7 @@ class RestResource {
 
   getSources () {
     return Promise.resolve([
-      {label: 'جام', value: 'jam', content: [{label: 'اسناد', value: 'document'}]},
+      {label: 'جام', value: 'jaam', content: [{label: 'اسناد', value: 'document'}]},
       {label: 'آشنا', value: 'ashna', content: [{label: 'صفحات', value: 'page'}, {label: 'کاربران', value: 'user'}, {label: 'پست ها', value: 'post'}, {label: 'کامنت ها', value: 'comment'}, {label: 'گروه ها', value: 'group'}]}
     ])
   }
@@ -157,7 +172,7 @@ class RestResource {
     delete query.search
 
     query.user_id = 1
-    return axios.post(serverURL + 'dynamic_save', query)
+    return axios.get(serverURL + 'dynamic_save', {params: query})
       .then(response => {
         console.log(response)
         return response

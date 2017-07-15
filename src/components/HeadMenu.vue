@@ -14,14 +14,14 @@
           </div>
         </a>
       </el-menu-item>
-      <el-submenu index="2">
+      <el-submenu index="2" class="reportList">
         <template slot="title">گزارش ها</template>
         <el-menu-item index="2-1" :key="report.id" v-for="report in reports">
           <a :href="'#load/' + report.id">{{report.name}}</a>
         </el-menu-item>
       </el-submenu>
       <el-menu-item index="3">
-        <a href="#/new">گزارش جدید+</a>
+        <a href="#/new">گزارش جدید</a>
       </el-menu-item>
       <el-menu-item index="4">
         <slot></slot>
@@ -49,7 +49,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .logo{
     display: flex;
     flex-direction: row-reverse;
@@ -84,5 +84,9 @@
       display: block;
       text-decoration: none;
     }
+  }
+  .reportList .el-menu{
+    max-height: 250px;
+    overflow-y: scroll;
   }
 </style>

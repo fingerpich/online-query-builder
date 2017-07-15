@@ -76,7 +76,7 @@
     padding: 20px;
   }
   .editQuery{
-    padding: 10px;
+    padding: 0 10px;
     text-decoration: none;
   }
 </style>
