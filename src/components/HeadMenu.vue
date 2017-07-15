@@ -13,6 +13,9 @@
       <el-menu-item index="3">
         <a href="#/new">New+</a>
       </el-menu-item>
+      <el-menu-item index="4">
+        <slot></slot>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

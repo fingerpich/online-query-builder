@@ -1,10 +1,8 @@
 <template>
   <div class="hello">
-    <head-menu></head-menu>
-    <div class="queryText">
-      <strong>SELECT </strong>
-      <a :href="'#/edit/'+$route.params.id">edit query</a>
-    </div>
+    <head-menu>
+      <a :href="'#/edit/'+$route.params.id" class="editQuery">Edit Query</a>
+    </head-menu>
     <div>
       <el-table
         :data="list"
@@ -38,6 +36,9 @@
     },
     name: 'queryEditor',
     methods: {
+      editQuery: function () {
+        this.$router.push({ name: 'edit', params: { id: this.$route.params.id } })
+      },
       changePage: function (pageNumber) {
         window.location.hash = '#/load/' + this.$route.params.id + '/' + pageNumber
       }
@@ -71,5 +72,11 @@
   h1, h2 {
     font-weight: normal;
   }
-
+  .queryText{
+    padding: 20px;
+  }
+  .editQuery{
+    padding: 10px;
+    text-decoration: none;
+  }
 </style>
