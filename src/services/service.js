@@ -4,30 +4,32 @@ const serverURL = 'api/'
 class RestResource {
   errors = [];
 
-  fields = null;
+  fields = {};
   getFields (source, sourceContent) {
-    if (this.fields) {
-      return Promise.resolve(this.fields)
+    if (this.fields[source] && this.fields[source][sourceContent]) {
+      return Promise.resolve(this.fields[source][sourceContent])
     } else {
-      this.fields = axios.get(serverURL + 'dynamic_fields', {
+      if (!this.fields[source]) this.fields[source] = {}
+      this.fields[source][sourceContent] = axios.get(serverURL + 'dynamic_fields', {
         params: {
           source: source,
           source_content: sourceContent
         },
-        withCredentials: true})
+        withCredentials: true
+      })
         .then(response => {
           response.data.items.map((field) => {
             field.key = field.value = field.name
             field.sortable = field.sort
             field.groupable = field.group
           })
-          this.fields = response.data.items
-          return this.fields
+          this.fields[source][sourceContent] = response.data.items
+          return this.fields[source][sourceContent]
         })
         .catch(e => {
           this.errors.push(e)
         })
-      return this.fields
+      return this.fields[source][sourceContent]
     }
 
     // value had better to be uniqe
@@ -43,25 +45,25 @@ class RestResource {
     // ])
   }
 
-  getSortableFields () {
+  getSortableFields (source, content) {
     return new Promise((resolve, reject) => {
-      this.getFields().then((fields) => {
+      this.getFields(source, content).then((fields) => {
         resolve(fields.filter((field) => field.sortable))
       })
     })
   }
 
-  getGroupableFields () {
+  getGroupableFields (source, content) {
     return new Promise((resolve, reject) => {
-      this.getFields().then((fields) => {
+      this.getFields(source, content).then((fields) => {
         resolve(fields.filter((field) => field.groupable))
       })
     })
   }
 
   reports = null;
-  getQueries () {
-    if (this.reports) {
+  getQueries (reload) {
+    if (this.reports && !reload) {
       return Promise.resolve(this.reports)
     } else {
       this.reports = axios.get(serverURL + 'dynamic_reports', {

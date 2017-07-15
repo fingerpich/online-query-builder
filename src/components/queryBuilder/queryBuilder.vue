@@ -101,9 +101,10 @@
       save: function () {
         services.saveQuery(this.query).then(function (res) {
           if (res) {
-            this.$router.push({ name: 'QueryResult', params: { id: res.id } })
+            this.$router.push({ name: 'QueryResult', params: { id: res.data } })
+            services.getQueries(true)
           }
-        })
+        }.bind(this))
       },
       onSourceChanged: function (e) {
         const selectedSources = this.sources.filter((source) => source.value === this.query.source)
@@ -111,6 +112,7 @@
           this.contents = selectedSources[0].content
           this.query.source_content = this.contents[0].value
         }
+        this.loadFields()
         this.query.sort_type = 'asc'
         this.query.sort_fields = []
         this.query.groupBy = []
@@ -119,23 +121,26 @@
           jsonQuery: {operator: '', query: {field: '', operator: '', input: ''}, root: true},
           query: ''
         }
+      },
+      loadFields () {
+        services.getFields(this.query.source, this.query.source_content).then(function (fields) {
+          this.fields = fields
+        }.bind(this))
+        services.getSortableFields(this.query.source, this.query.source_content).then(function (fields) {
+          this.sortable_fields = fields
+        }.bind(this))
+        services.getGroupableFields(this.query.source, this.query.source_content).then(function (fields) {
+          this.groupable_fields = fields
+        }.bind(this))
       }
     },
     created () {
-      services.getFields().then(function (fields) {
-        this.fields = fields
-      }.bind(this))
-      services.getSortableFields().then(function (fields) {
-        this.sortable_fields = fields
-      }.bind(this))
-      services.getGroupableFields().then(function (fields) {
-        this.groupable_fields = fields
-      }.bind(this))
       services.getSources().then(function (sources) {
         this.sources = sources
         this.query.source = sources[0].value
         this.contents = sources[0].content
         this.query.source_content = this.contents[0].value
+        this.loadFields()
       }.bind(this))
     },
     data () {
