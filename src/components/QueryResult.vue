@@ -68,7 +68,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
   h1, h2 {
     font-weight: normal;
   }
@@ -78,5 +78,19 @@
   .editQuery{
     padding: 0 10px;
     text-decoration: none;
+  }
+  .el-table th>.cell {
+    text-overflow: ellipsis;
+    padding: 0;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .el-table .cell {
+    white-space: normal;
+    word-break: break-all;
+    line-height: 24px;
+    padding: 0 3px;
+    max-height: 24px;
+    text-overflow: ellipsis;
   }
 </style>

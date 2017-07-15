@@ -110,8 +110,11 @@ class RestResource {
       }
     })
       .then(response => {
-        // JSON responses are automatically parsed.
-        return response.data.items[1]
+        if (response.data) {
+          return response.data.items[1]
+        } else {
+          return {error: 1}
+        }
       })
       .catch(e => {
         this.errors.push(e)
@@ -174,7 +177,6 @@ class RestResource {
     query.user_id = 1
     return axios.get(serverURL + 'dynamic_save', {params: query})
       .then(response => {
-        console.log(response)
         return response
       })
       .catch(e => {

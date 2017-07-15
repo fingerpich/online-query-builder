@@ -99,7 +99,11 @@
     name: 'queryBuilder',
     methods: {
       save: function () {
-        services.saveQuery(this.query)
+        services.saveQuery(this.query).then(function (res) {
+          if (res) {
+            this.$router.push({ name: 'QueryResult', params: { id: res.id } })
+          }
+        })
       },
       onSourceChanged: function (e) {
         const selectedSources = this.sources.filter((source) => source.value === this.query.source)
