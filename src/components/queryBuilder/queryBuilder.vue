@@ -77,7 +77,7 @@
 
     <div class="level">
       <div style="padding:20px"></div>
-      <el-input placeholder="query name" v-model="query.report_name" style="width:initial"></el-input>
+      <el-input placeholder="query name" v-model="query.name" style="width:initial"></el-input>
       <el-button v-on:click="save" type="primary">ذخیره</el-button>
     </div>
   </div>
@@ -86,13 +86,14 @@
 <script>
   import SearchBuilder from './searchBuilder/searchBuilder'
   import services from '../../services/service'
+  import * as databaseServices from '../../services/database'
   export default {
     components: {
       SearchBuilder
     },
     computed: {
       sortQuery: function () {
-        return services.getSortQuery(this.query.sort.fields, this.query.sort.isAscending)
+        return databaseServices.getSortQuery(this.query.sort.fields, this.query.sort.isAscending)
       }
     },
     name: 'queryBuilder',
@@ -138,7 +139,7 @@
         contents: [],
         sources: [],
         query: {
-          report_name: '',
+          name: '',
           sort: {
             fields: [],
             isAscending: true

@@ -10,3 +10,7 @@ function solrSearchQueryGenerator (jsonData) {
 export function extractSearchQuery (jsonData) {
   return solrSearchQueryGenerator(jsonData)
 }
+
+export function getSortQuery (fields, isAscending) {
+  return 'sort = ' + fields.join(',') + ' ' + (isAscending ? 'asc' : 'desc')
+}
