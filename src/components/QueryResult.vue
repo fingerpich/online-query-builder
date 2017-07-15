@@ -40,7 +40,7 @@
         this.$router.push({ name: 'edit', params: { id: this.$route.params.id } })
       },
       changePage: function (pageNumber) {
-        window.location.hash = '#/load/' + this.$route.params.id + '/' + pageNumber
+        this.$router.push({ name: 'QueryResult', params: { id: this.$route.params.id, page: pageNumber } })
       }
     },
     watch: {
