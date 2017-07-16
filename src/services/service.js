@@ -4,8 +4,14 @@ const serverURL = 'api/'
 class RestResource {
   errors = [];
 
+  changeSourceContent (source, sourceContent) {
+    this.defaultSource = source
+    this.defaultContent = sourceContent
+  }
   fields = {};
   getFields (source, sourceContent) {
+    if (!source) source = this.defaultSource
+    if (!sourceContent) sourceContent = this.defaultContent
     if (this.fields[source] && this.fields[source][sourceContent]) {
       return Promise.resolve(this.fields[source][sourceContent])
     } else {
@@ -113,7 +119,12 @@ class RestResource {
     })
       .then(response => {
         if (response.data) {
-          return response.data.items[1]
+          return {
+            query: response.data.items[0],
+            name: response.data.items[0].reportname,
+            list: response.data.items[2],
+            totalPages: response.data.items[1]['total page']
+          }
         } else {
           return {error: 1}
         }

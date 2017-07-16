@@ -36,7 +36,15 @@
 
       }
     },
+    ready: function () {
+
+    },
     created () {
+      services.getFields().then(function (fields) {
+        this.fields = fields
+      }.bind(this))
+    },
+    updated () {
       services.getFields().then(function (fields) {
         this.fields = fields
       }.bind(this))

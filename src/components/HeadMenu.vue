@@ -86,7 +86,7 @@
     }
   }
   .reportList .el-menu{
-    max-height: 250px;
-    overflow-y: scroll;
+    max-height: 350px;
+    overflow-y: auto;
   }
 </style>

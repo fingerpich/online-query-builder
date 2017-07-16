@@ -51,7 +51,7 @@
   .operator{
     display: flex;
     flex-direction: row;
-    $borderColor:#ddd;
+    $borderColor:#bbb;
     .operatorScope{
       position: relative;
       &::before{
