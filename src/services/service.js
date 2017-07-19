@@ -4,6 +4,10 @@ const serverURL = 'api/'
 class RestResource {
   errors = [];
 
+  changeSourceContent (source, sourceContent) {
+    this.defaultSource = source
+    this.defaultContent = sourceContent
+  }
   fields = {};
   getFields (source, sourceContent) {
     // if (this.fields[source] && this.fields[source][sourceContent]) {
@@ -104,10 +108,23 @@ class RestResource {
   }
 
   getQueryResult (queryID, page) {
-    // return axios.get(serverURL + 'dynamic_load?id=' + queryID + '&&page='+page)
+    // return axios.get(serverURL + 'load', {
+    //   params: {
+    //     id: queryID,
+    //     page_number: page,
+    //   }
+    // })
     //   .then(response => {
-    //     // JSON responses are automatically parsed.
-    //     return response.data.items
+    //     if (response.data) {
+    //       return {
+    //         query: response.data.query,
+    //         name: response.data.name,
+    //         list: response.data.list,
+    //         totalPages: response.data.totalPages
+    //       }
+    //     } else {
+    //       return {error: 1}
+    //     }
     //   })
     //   .catch(e => {
     //     this.errors.push(e)
@@ -139,9 +156,18 @@ class RestResource {
       {name: 'wercwe', content: 'vjhn jhni ircwe', category: 'svjcsvj', tag: 'svjcsvj', keyword: 'rvjvj', title: 'irvjhn rvjvj', published_date: '2/7/1392', google_score: 2421415, alexa_score: 4426421},
       {name: 'jhnijv', content: 'fokj okjs snijv', category: 'swowswo', tag: 'swowswo', keyword: 'nfofo', title: 'snfokj nfofo', published_date: '1/5/1392', google_score: 2321315, alexa_score: 5635321}
     ]
-    return Promise.resolve(arr.filter((a) => {
-      return Math.random() > 0.5
-    }).slice(0, 10))
+    return Promise.resolve(
+      {
+        query: 'title : *fingerpich*',
+        name: 'fingerpich',
+        list: arr.filter((a) => {
+          return Math.random() > 0.5
+        }).slice(0, 10),
+        totalPages: 220
+      })
+
+    // const filteredReport = this.reports.filter((report) => report.id === id)
+    // return Promise.resolve(filteredReport.length ? filteredReport[0] : {})
   }
 
   getSources () {

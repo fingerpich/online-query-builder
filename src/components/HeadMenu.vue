@@ -48,4 +48,8 @@
       text-decoration: none;
     }
   }
+  .reportList .el-menu{
+    max-height: 350px;
+    overflow-y: auto;
+  }
 </style>

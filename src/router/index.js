@@ -29,7 +29,7 @@ export default new Router({
     },
     {
       path: '/load/:id/:page',
-      name: 'QueryResult',
+      name: 'QueryResultPagination',
       component: QueryResult
     }
   ]

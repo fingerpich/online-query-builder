@@ -14,7 +14,7 @@
       </div>
       <div style="margin:20px"></div>
       <div>
-        <el-select v-model="query.source_content" placeholder="source content">
+        <el-select v-model="query.source_content" placeholder="source content" v-on:change="onContentChange">
           <el-option
             v-for="content in contents"
             :key="content.value"
@@ -106,12 +106,11 @@
           }
         }.bind(this))
       },
-      onSourceChanged: function (e) {
-        const selectedSources = this.sources.filter((source) => source.value === this.query.source)
-        if (selectedSources && selectedSources[0] && selectedSources[0].content) {
-          this.contents = selectedSources[0].content
-          this.query.source_content = this.contents[0].value
-        }
+      onContentChange: function (e) {
+        this.changeSourceContent()
+      },
+      changeSourceContent: function () {
+        services.changeSourceContent(this.query.source, this.query.source_content)
         this.loadFields()
         this.query.sort_type = 'asc'
         this.query.sort_fields = []
@@ -120,6 +119,13 @@
         this.query.search = {
           jsonQuery: {operator: '', query: {field: '', operator: '', input: ''}, root: true},
           query: ''
+        }
+      },
+      onSourceChanged: function (e) {
+        const selectedSources = this.sources.filter((source) => source.value === this.query.source)
+        if (selectedSources && selectedSources[0] && selectedSources[0].content) {
+          this.contents = selectedSources[0].content
+          this.query.source_content = this.contents[0].value
         }
       },
       loadFields () {
