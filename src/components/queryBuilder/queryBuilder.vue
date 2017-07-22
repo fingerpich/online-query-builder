@@ -199,7 +199,7 @@
     padding:50px 0 100px;
   }
   .sortSwitch .el-switch__core {
-    background: #20a0ff !important;
+    background: #673ab7 !important;
     border-color: transparent !important;
   }
   .el-transfer-panel__item.el-checkbox{
