@@ -7,7 +7,6 @@
 
 <script>
   import QueryBuilder from './queryBuilder/queryBuilder.vue'
-  import services from '../services/service'
   import headMenu from './HeadMenu.vue'
   export default {
     components: {
@@ -18,11 +17,6 @@
       return {}
     },
     created () {
-      if (this.$route.params.id) {
-        services.getAQuery(this.$route.params.id).then(function () {
-
-        })
-      }
     }
   }
 </script>

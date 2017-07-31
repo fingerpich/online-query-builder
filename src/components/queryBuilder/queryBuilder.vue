@@ -147,6 +147,11 @@
         this.contents = sources[0].content
         this.query.source_content = this.contents[0].value
         this.loadFields()
+        if (this.$route.params.id) {
+          services.getAQuery(this.$route.params.id).then(function (query) {
+            this.query = query
+          }.bind(this))
+        }
       }.bind(this))
     },
     data () {

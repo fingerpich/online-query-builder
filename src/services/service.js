@@ -173,11 +173,40 @@ class RestResource {
       {label: 'آشنا', value: 'ashna', content: [{label: 'صفحات', value: 'page'}, {label: 'کاربران', value: 'user'}, {label: 'پست ها', value: 'post'}, {label: 'کامنت ها', value: 'comment'}, {label: 'گروه ها', value: 'group'}]}
     ])
   }
+  getAQuery (id) {
+    return axios.get(serverURL + 'dynamic_reports', {
+      params: {
+        user_id: 1,
+        id: id
+      }
+    })
+      .then(response => {
+        response.data.items.map(s => { s.name = s.reportname; s.id = s.report_id })
+        const query = response.data.items[0]
+        // deserialize
+        query.sort = {
+          fields: query.sort_fields,
+          isAscending: query.sort_type === 'asc'
+        }
+        query.selected_fields = query.output_fields
+        query.source_content = query.content
+        query.search = {
+          query: query.string_query,
+          jsonQuery: query.json_query
+        }
+        return query
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+  }
 
   saveQuery (query) {
     query = JSON.parse(JSON.stringify(query))
     console.log(query)
     query.sort_fields = query.sort.fields
+    // query.content = query.source_content
+    // delete query.source_content
     query.sort_type = query.sort.isAscending ? 'asc' : 'desc'
     query.output_fields = query.selected_fields
     query.string_query = query.search.query

@@ -4,11 +4,11 @@
       <a :href="'#/edit/'+$route.params.id" class="editQuery">تغییر گزارش</a>
     </head-menu>
     <div class="queryContainer">
-      <h3>{{reportName}}</h3>
-      <div class="reportQuery">
-        {{reportQuery}}
-      </div>
       <div v-if="list">
+        <h3>{{reportName}}</h3>
+        <div class="reportQuery">
+          {{reportQuery}}
+        </div>
         <div @mouseleave="mouseLeave">
           <el-table
             :data="list"
@@ -37,11 +37,11 @@
           <p>{{moreDetailBody}}</p>
         </div>
       </div>
-      <div v-else class="tabl">
+      <div v-else class="tableSubstitude">
         <div v-if="error">
           {{error}}
         </div>
-        <div v-else>loading</div>
+        <div v-else class="loader"></div>
       </div>
     </div>
   </div>
@@ -124,6 +124,55 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+  .tableSubstitude{
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .loader,
+    .loader:after {
+      border-radius: 50%;
+      width: 10em;
+      height: 10em;
+    }
+    .loader {
+      margin: 60px auto;
+      font-size: 10px;
+      position: relative;
+      text-indent: -9999em;
+      border-top: 1.1em solid rgba(103, 58, 183, 0.2);
+      border-right: 1.1em solid rgba(103, 58, 183, 0.2);
+      border-bottom: 1.1em solid rgba(103, 58, 183, 0.2);
+      border-left: 1.1em solid #ffffff;
+      -webkit-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-animation: load8 1.1s infinite linear;
+      animation: load8 1.1s infinite linear;
+    }
+    @-webkit-keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+  }
   .queryResult{
     .queryContainer {
       margin: 10px;
