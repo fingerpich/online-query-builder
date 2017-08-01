@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const serverURL = 'api/'
+const serverURL = '/api'
+// const serverURL = '/api/service/kavosh_backend/'
 class RestResource {
   errors = [];
 
@@ -54,7 +55,8 @@ class RestResource {
   getSortableFields (source, content) {
     return new Promise((resolve, reject) => {
       this.getFields(source, content).then((fields) => {
-        resolve(fields.filter((field) => field.sortable))
+        if (!fields) this.errors.push('fields are empty')
+        resolve(fields ? fields.filter((field) => field.sortable) : [])
       })
     })
   }
@@ -62,7 +64,8 @@ class RestResource {
   getGroupableFields (source, content) {
     return new Promise((resolve, reject) => {
       this.getFields(source, content).then((fields) => {
-        resolve(fields.filter((field) => field.groupable))
+        if (!fields) this.errors.push('fields are empty')
+        resolve(fields ? fields.filter((field) => field.groupable) : [])
       })
     })
   }
@@ -191,8 +194,8 @@ class RestResource {
         query.selected_fields = query.output_fields
         query.source_content = query.content
         query.search = {
-          query: query.string_query,
-          jsonQuery: query.json_query
+          query: query.query_string,
+          jsonQuery: query.query_json
         }
         return query
       })

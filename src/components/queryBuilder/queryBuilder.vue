@@ -149,7 +149,11 @@
         this.loadFields()
         if (this.$route.params.id) {
           services.getAQuery(this.$route.params.id).then(function (query) {
-            this.query = query
+            this.query.name = query.name
+            this.query.source = query.source
+            this.query.source_content = query.source_content
+            this.query.search.jsonQuery = query.search.jsonQuery
+            this.query.search.query = query.search.query
           }.bind(this))
         }
       }.bind(this))

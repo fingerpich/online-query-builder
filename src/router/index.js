@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import QueryEditor from '@/components/QueryEditor'
 import QueryResult from '@/components/QueryResult'
+import login from '@/components/login'
 
 Vue.use(Router)
 
@@ -31,6 +32,11 @@ export default new Router({
       path: '/load/:id/:page',
       name: 'QueryResultPagination',
       component: QueryResult
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
     }
   ]
 })

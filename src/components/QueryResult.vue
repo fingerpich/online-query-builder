@@ -86,6 +86,7 @@
               this.list = results.list
               this.reportName = results.name
               this.totalPages = results.totalPages * 10
+              this.currentPage = this.$route.params.page || 1
               this.columns = Object.keys(this.list[0])
               this.reportQuery = results.query.query_string
             } else if (results.error) {
@@ -125,11 +126,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
   .tableSubstitude{
-    min-height: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    min-height: 800px;
     .loader,
     .loader:after {
       border-radius: 50%;
@@ -137,9 +134,12 @@
       height: 10em;
     }
     .loader {
-      margin: 60px auto;
+      /*position: relative;*/
+      position: absolute;
+      top:50%;
+      left:50%;
+      margin: -60px;
       font-size: 10px;
-      position: relative;
       text-indent: -9999em;
       border-top: 1.1em solid rgba(103, 58, 183, 0.2);
       border-right: 1.1em solid rgba(103, 58, 183, 0.2);
