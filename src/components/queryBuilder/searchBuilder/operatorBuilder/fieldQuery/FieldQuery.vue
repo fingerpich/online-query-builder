@@ -10,7 +10,8 @@
     </el-select>
     <el-select v-bind:disabled="!query.field" v-model="query.operator" clearable placeholder="Operator" v-on:change="onChange">
       <el-option
-        v-for="operator in getFieldOperator()"
+        v-for="operator in operators"
+        v-if="hasThisOperator(operator)"
         :key="operator.value"
         :label="operator.label"
         :value="operator.value">
@@ -32,9 +33,6 @@
     name: 'fieldQuery',
     props: ['query'],
     computed: {
-      fieldOperators: function () {
-
-      }
     },
     ready: function () {
 
@@ -68,11 +66,12 @@
       }
     },
     methods: {
-      getFieldOperator () {
-        const fieldType = this.getFieldType()
-        return this.operators.filter(function (operator) { return operator.types.indexOf(fieldType) > -1 })
+      hasThisOperator (operator) {
+        let selectedFieldType = this.getFieldType()
+        return operator.types.indexOf(selectedFieldType) > -1
       },
       getFieldType () {
+        if (!this.query.field) return 'string'
         if (this.fields) {
           const filtered = this.fields.filter(function (field) {
             return field.value === this.query.field

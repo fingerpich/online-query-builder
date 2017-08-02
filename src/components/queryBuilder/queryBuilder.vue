@@ -146,15 +146,23 @@
         this.query.source = sources[0].value
         this.contents = sources[0].content
         this.query.source_content = this.contents[0].value
-        this.loadFields()
         if (this.$route.params.id) {
           services.getAQuery(this.$route.params.id).then(function (query) {
             this.query.name = query.name
             this.query.source = query.source
             this.query.source_content = query.source_content
-            this.query.search.jsonQuery = query.search.jsonQuery
-            this.query.search.query = query.search.query
+            setTimeout(() => {
+              try {
+                this.query.search.jsonQuery = JSON.parse(query.search.jsonQuery)
+              } catch (e) {
+                console.log('saved query is not json')
+              }
+              this.query.search.query = query.search.query
+            }, 1000)
+            this.loadFields()
           }.bind(this))
+        } else {
+          this.loadFields()
         }
       }.bind(this))
     },
