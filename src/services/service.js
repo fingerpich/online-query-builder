@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const serverURL = '/api'
+const serverURL = 'api/'
 // const serverURL = '/api/service/kavosh_backend/'
 class RestResource {
   errors = [];

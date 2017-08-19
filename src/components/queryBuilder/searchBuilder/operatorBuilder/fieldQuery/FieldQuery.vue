@@ -33,6 +33,12 @@
     name: 'fieldQuery',
     props: ['query'],
     computed: {
+      fieldsType: function () {
+        return this.fields.reduce((fieldsType, field) => {
+          fieldsType[field.value] = field.type
+          return fieldsType
+        }, {})
+      }
     },
     ready: function () {
 
@@ -41,6 +47,7 @@
       services.getFields().then(function (fields) {
         this.fields = fields
       }.bind(this))
+      this.firstChangeHasMade = false
     },
     updated () {
       services.getFields().then(function (fields) {
@@ -49,6 +56,7 @@
     },
     data () {
       return {
+        firstChangeHasMade: true,
         inputFrom: '',
         inputTo: '',
         matchInput: '',
@@ -73,19 +81,17 @@
       getFieldType () {
         if (!this.query.field) return 'string'
         if (this.fields) {
-          const filtered = this.fields.filter(function (field) {
-            return field.value === this.query.field
-          }.bind(this))
-          if (filtered && filtered[0]) {
-            return filtered[0].type
-          }
+          return this.fieldsType[this.query.field]
         }
         return ''
       },
       fieldChanged: function (e) {
-        this.query.operator = ''
-        this.query.input = ''
+        if (this.firstChangeHasMade) {
+          this.query.operator = ''
+          this.query.input = ''
+        }
         this.onChange(e)
+        this.firstChangeHasMade = true
       },
       onChange: function (e) {
         const fieldType = this.getFieldType()

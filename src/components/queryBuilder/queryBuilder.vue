@@ -151,17 +151,30 @@
             this.query.name = query.name
             this.query.source = query.source
             this.query.source_content = query.source_content
-            setTimeout(() => {
-              try {
-                this.query.search.jsonQuery = JSON.parse(query.search.jsonQuery)
-              } catch (e) {
-                console.log('saved query is not json')
-              }
-              this.query.search.query = query.search.query
-            }, 1000)
+            try {
+              this.query.search.jsonQuery = JSON.parse(query.search.jsonQuery)
+            } catch (e) {
+              console.log('saved query is not json')
+            }
+            this.query.search.query = query.search.query
             this.loadFields()
           }.bind(this))
         } else {
+          this.query = {
+            name: '',
+            sort: {
+              fields: [],
+              isAscending: true
+            },
+            groupBy: [],
+            source: '',
+            source_content: '',
+            selected_fields: [],
+            search: {
+              jsonQuery: {operator: '', query: {field: '', operator: '', input: ''}, root: true},
+              query: ''
+            }
+          }
           this.loadFields()
         }
       }.bind(this))
