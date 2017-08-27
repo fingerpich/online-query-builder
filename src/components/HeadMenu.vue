@@ -2,17 +2,13 @@
   <div>
     <el-menu theme="dark" class="el-menu-demo" mode="horizontal">
       <el-menu-item index="1" style="float:right">
-        <a href="#/">
-          <div class="logo">
-            <div class="logoIcon"></div>
-            <div>
-              <h2>سیستم تحلیلی کاوش</h2>
-              <h3>
-                Kavosh Analytics System
-              </h3>
-            </div>
-          </div>
-        </a>
+        <div>
+          <a class="logo" href="/dashboard" title="داشبورد">
+            <h2 class="title">سیــستم تحلــیلی کــاوش</h2>
+            <span class="en-title">Kavosh Analytics System</span>
+            <span class="ictLogo"></span>
+          </a>
+        </div>
       </el-menu-item>
       <el-submenu index="2" class="reportList">
         <template slot="title">گزارش ها</template>
@@ -51,32 +47,53 @@
 
 <style lang="scss">
   .logo{
-    display: flex;
-    flex-direction: row-reverse;
-    .logoIcon{
-      background: url(../assets/Kavosh-logo.png) no-repeat 100% 0;
+    position: absolute;
+    width: 218px;
+    height: 45px;
+    right: 0;
+    top: 13px;
+    .ictLogo {
+      background: url('../assets/Kavosh-logo.png') no-repeat top right ;
       background-size: 44px 44px;
-      position: relative;
+      position:absolute;
+      margin-right: 0.5rem;
       z-index: 90;
       right: 0;
-      width: 46px;
-      height: 50px;
-      margin: 12px;
+      width: 44px;
+      height: 44px;
     }
-    h2,h3{
-      line-height:18px;
+    .title,.en-title {
+      color: #fff;
+      margin: -3px 0 0 0;
+      line-height: 1.6rem;
+      font-size: 1rem;
+      top: 0;
+      position: absolute;
+      right: 55px;
+      text-align: center;
+      width: 170px;
     }
-    h2{
-      margin:14px 0 0;
-      font-size:18px;
+    .en-title{
+      margin-top: 25px;
+      font-size:0.9rem
     }
-    h3{
-      margin:3px 0;
-      opacity: 0.5;
-      font-size:14px;
-      font-weight: 100;
+    @media screen and (max-width: 400px) {
+      position: absolute;
+      .ictLogo{
+        background-size: 36px;
+        margin: 4px;
+      }
+      .en-title,.title{
+        right: 20px;
+        font-size: 11px;
+      }
+      .title{
+        margin-top: 10px;
+        font-size: 12px;
+      }
     }
   }
+
   .el-menu-item {
     padding: 0;
     a{
