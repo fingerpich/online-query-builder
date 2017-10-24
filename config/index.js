@@ -1,6 +1,15 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
 
+// var axios = require('axios');
+// axios.post('http://10.102.1.186:81/api/login', {
+//   username: 'admin',
+//   password: 'admin'
+// }, {withCredentials: true}).then((pass) => {
+//   console.log(pass);
+//   console.log("connected");
+// });
+
 module.exports = {
   build: {
     env: require('./prod.env'),
@@ -29,12 +38,20 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/api": {
-        // "target": "http://10.102.1.186:81/",
-        "target": "http://10.102.1.42:9090/v1/",
+        "target": "http://10.102.1.186:81/api/service/kavosh_backend/",
+        // "target": "http://10.102.1.36:9090/v1/",
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
         },
+        "secure": false
+      },
+      "/login":{
+        "target": "http://10.102.1.186:81/api",
+        changeOrigin: true,
+        // pathRewrite: {
+        //   '^/api': ''
+        // },
         "secure": false
       }
     },

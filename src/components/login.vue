@@ -10,10 +10,12 @@
     name: 'login',
     methods: {},
     created () {
-      axios.post('/api/login', {
+      axios.post('/login', {
         username: 'admin',
         password: 'admin'
-      }, {withCredentials: true})
+      }, {withCredentials: true}).then(d => {
+        console.log(d)
+      })
     }
   }
 </script>

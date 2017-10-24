@@ -25,12 +25,12 @@ class RestResource {
         withCredentials: true
       })
         .then(response => {
-          response.data.items.map((field) => {
+          response.data.json.items.map((field) => {
             field.key = field.value = field.name
             field.sortable = field.sort
             field.groupable = field.group
           })
-          this.fields[source][sourceContent] = response.data.items
+          this.fields[source][sourceContent] = response.data.json.items
           return this.fields[source][sourceContent]
         })
         .catch(e => {
@@ -81,8 +81,8 @@ class RestResource {
         }
       })
         .then(response => {
-          response.data.items.map(s => { s.name = s.reportname; s.id = s.report_id })
-          this.reports = response.data.items
+          response.data.json.items.map(s => { s.name = s.reportname; s.id = s.report_id })
+          this.reports = response.data.json.items
           return this.reports
         })
         .catch(e => {
@@ -102,7 +102,7 @@ class RestResource {
   getQuery (id) {
     // return axios.get(serverURL + 'dynamic_reports?user_id=1')
     //   .then(response => {
-    //     return response.data
+    //     return response.data.json
     //   })
     //   .catch(e => {
     //     this.errors.push(e)
@@ -121,12 +121,12 @@ class RestResource {
       }
     })
       .then(response => {
-        if (response.data) {
+        if (response.data.json) {
           return {
-            query: response.data.items[0],
-            name: response.data.items[0].reportname,
-            list: response.data.items[2],
-            totalPages: response.data.items[1]['total page']
+            query: response.data.json.items[0],
+            name: response.data.json.items[0].reportname,
+            list: response.data.json.items[2],
+            totalPages: response.data.json.items[1]['total page']
           }
         } else {
           return {error: 1}
@@ -135,39 +135,6 @@ class RestResource {
       .catch(e => {
         this.errors.push(e)
       })
-    // const arr = [
-    //   {name: 'ascasc', content: 'wvew vewr rcasc', category: 'csvdcsv', tag: 'csvdcsv', keyword: 'cwvwv', title: 'rcwvew cwvwv', published_date: '1/2/1392', google_score: 5352321, alexa_score: 3353352},
-    //   {name: 'vewrvw', content: 'ewer werc cwrvw', category: 'wswdwsw', tag: 'wswdwsw', keyword: 'wewew', title: 'cwewer wewew', published_date: '2/4/1392', google_score: 3532525, alexa_score: 5538532},
-    //   {name: 'wercwe', content: 'vjhn jhni ircwe', category: 'svjcsvj', tag: 'svjcsvj', keyword: 'rvjvj', title: 'irvjhn rvjvj', published_date: '2/7/1392', google_score: 2421415, alexa_score: 4426421},
-    //   {name: 'jhnijv', content: 'fokj okjs snijv', category: 'swowswo', tag: 'swowswo', keyword: 'nfofo', title: 'snfokj nfofo', published_date: '1/5/1392', google_score: 2321315, alexa_score: 5635321},
-    //   {name: 'okjsdf', content: 'vmen menr rjsdf', category: 'sjmrsjm', tag: 'sjmrsjm', keyword: 'jvmvm', title: 'rjvmen jvmvm', published_date: '8/3/1392', google_score: 7871815, alexa_score: 3653871},
-    //   {name: 'menrbv', content: 'rbvmen me enrbv', category: 'sobnsob', tag: 'sobnsob', keyword: 'nrbrb', title: 'enrbvmenrbrb', published_date: '3/9/1392', google_score: 5651615, alexa_score: 2642651},
-    //   {name: 'wercwe', content: 'vjhn jhni ircwe', category: 'svjcsvj', tag: 'svjcsvj', keyword: 'rvjvj', title: 'irvjhn rvjvj', published_date: '2/7/1392', google_score: 2421415, alexa_score: 4426421},
-    //   {name: 'jhnijv', content: 'fokj okjs snijv', category: 'swowswo', tag: 'swowswo', keyword: 'nfofo', title: 'snfokj nfofo', published_date: '1/5/1392', google_score: 2321315, alexa_score: 5635321},
-    //   {name: 'okjsdf', content: 'vmen menr rjsdf', category: 'sjmrsjm', tag: 'sjmrsjm', keyword: 'jvmvm', title: 'rjvmen jvmvm', published_date: '8/3/1392', google_score: 7871815, alexa_score: 3653871},
-    //   {name: 'menrbv', content: 'rbvmen me enrbv', category: 'sobnsob', tag: 'sobnsob', keyword: 'nrbrb', title: 'enrbvmenrbrb', published_date: '3/9/1392', google_score: 5651615, alexa_score: 2642651},
-    //   {name: 'wercwe', content: 'vjhn jhni ircwe', category: 'svjcsvj', tag: 'svjcsvj', keyword: 'rvjvj', title: 'irvjhn rvjvj', published_date: '2/7/1392', google_score: 2421415, alexa_score: 4426421},
-    //   {name: 'jhnijv', content: 'fokj okjs snijv', category: 'swowswo', tag: 'swowswo', keyword: 'nfofo', title: 'snfokj nfofo', published_date: '1/5/1392', google_score: 2321315, alexa_score: 5635321},
-    //   {name: 'okjsdf', content: 'vmen menr rjsdf', category: 'sjmrsjm', tag: 'sjmrsjm', keyword: 'jvmvm', title: 'rjvmen jvmvm', published_date: '8/3/1392', google_score: 7871815, alexa_score: 3653871},
-    //   {name: 'okjsdf', content: 'vmen menr rjsdf', category: 'sjmrsjm', tag: 'sjmrsjm', keyword: 'jvmvm', title: 'rjvmen jvmvm', published_date: '8/3/1392', google_score: 7871815, alexa_score: 3653871},
-    //   {name: 'menrbv', content: 'rbvmen me enrbv', category: 'sobnsob', tag: 'sobnsob', keyword: 'nrbrb', title: 'enrbvmenrbrb', published_date: '3/9/1392', google_score: 5651615, alexa_score: 2642651},
-    //   {name: 'wercwe', content: 'vjhn jhni ircwe', category: 'svjcsvj', tag: 'svjcsvj', keyword: 'rvjvj', title: 'irvjhn rvjvj', published_date: '2/7/1392', google_score: 2421415, alexa_score: 4426421},
-    //   {name: 'jhnijv', content: 'fokj okjs snijv', category: 'swowswo', tag: 'swowswo', keyword: 'nfofo', title: 'snfokj nfofo', published_date: '1/5/1392', google_score: 2321315, alexa_score: 5635321},
-    //   {name: 'okjsdf', content: 'vmen menr rjsdf', category: 'sjmrsjm', tag: 'sjmrsjm', keyword: 'jvmvm', title: 'rjvmen jvmvm', published_date: '8/3/1392', google_score: 7871815, alexa_score: 3653871},
-    //   {name: 'menrbv', content: 'rbvmen me enrbv', category: 'sobnsob', tag: 'sobnsob', keyword: 'nrbrb', title: 'enrbvmenrbrb', published_date: '3/9/1392', google_score: 5651615, alexa_score: 2642651},
-    //   {name: 'wercwe', content: 'vjhn jhni ircwe', category: 'svjcsvj', tag: 'svjcsvj', keyword: 'rvjvj', title: 'irvjhn rvjvj', published_date: '2/7/1392', google_score: 2421415, alexa_score: 4426421},
-    //   {name: 'jhnijv', content: 'fokj okjs snijv', category: 'swowswo', tag: 'swowswo', keyword: 'nfofo', title: 'snfokj nfofo', published_date: '1/5/1392', google_score: 2321315, alexa_score: 5635321},
-    //   {name: 'okjsdf', content: 'vmen menr rjsdf', category: 'sjmrsjm', tag: 'sjmrsjm', keyword: 'jvmvm', title: 'rjvmen jvmvm', published_date: '8/3/1392', google_score: 7871815, alexa_score: 3653871},
-    //   {name: 'menrbv', content: 'rbvmen me enrbv', category: 'sobnsob', tag: 'sobnsob', keyword: 'nrbrb', title: 'enrbvmenrbrb', published_date: '3/9/1392', google_score: 5651615, alexa_score: 2642651},
-    //   {name: 'wercwe', content: 'vjhn jhni ircwe', category: 'svjcsvj', tag: 'svjcsvj', keyword: 'rvjvj', title: 'irvjhn rvjvj', published_date: '2/7/1392', google_score: 2421415, alexa_score: 4426421},
-    //   {name: 'jhnijv', content: 'fokj okjs snijv', category: 'swowswo', tag: 'swowswo', keyword: 'nfofo', title: 'snfokj nfofo', published_date: '1/5/1392', google_score: 2321315, alexa_score: 5635321}
-    // ]
-    // return Promise.resolve(arr.filter((a) => {
-    //   return Math.random() > 0.5
-    // }).slice(0, 10))
-    // const filteredReport = this.reports.filter((report) => report.id === id)
-    // return Promise.resolve(filteredReport.length ? filteredReport[0] : {})
-    // return Promise.resolve({'report_name': 'popularity', 'sort_type': 'asc', 'sort_fields': ['likes'], 'groupBy': ['date'], 'source': 'source2', 'source_content': 'post', 'selected_fields': [], 'search': {'jsonQuery': {'operator': 'AND', 'query': '', 'root': true, 'subQueries': [{'operator': 'OR', 'query': '', 'subQueries': [{'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'mojtaba', 'q': 'content : *mojtaba*'}}, {'operator': '', 'query': {'field': 'content', 'operator': 'contain', 'input': 'fingerpich', 'q': 'content : *fingerpich*'}}]}, {'operator': '', 'query': {'field': 'likes', 'operator': 'gt', 'input': '20', 'q': 'likes : [ 20 TO * ] '}}]}, 'query': ' (  ( content : *mojtaba* OR content : *fingerpich* )  AND likes : [ 20 TO * ]  ) '}})
   }
 
   getSources () {
@@ -184,8 +151,8 @@ class RestResource {
       }
     })
       .then(response => {
-        response.data.items.map(s => { s.name = s.reportname; s.id = s.report_id })
-        const query = response.data.items[0]
+        response.data.json.json.items.map(s => { s.name = s.reportname; s.id = s.report_id })
+        const query = response.data.json.json.items[0]
         // deserialize
         query.sort = {
           fields: query.sort_fields,
